@@ -25,10 +25,10 @@ class ClientRow extends Component {
             <div className="client-row">
                 <div className="row-item">{this.getPartOfName(client.name, 'first')}</div>
                 <div className="row-item">{this.getPartOfName(client.name, 'surname')}</div>
-                <div className="row-item">{client.email}</div>
+                <div className="row-item">{client.country}</div>
                 <div className="row-item">{this.formatDate(client.firstContact)}</div>
-                <div className="row-item">{client.email}</div>
-                <div className="row-item">{client.sold}</div>
+                <div className="row-item">{client.emailType ? client.emailType : '.'}</div>
+                <div className="row-item">{client.sold ? <i className="fas fa-check"></i> : '-'}</div>
                 <div className="row-item">{client.owner}</div>
             </div>
         )

@@ -9,11 +9,12 @@ class Clients extends Component {
         super()
         this.state = {
             clients: [],
-            search: ""
+            searchFilter: "",
+            selectedFilter: "name"
         }
     }
 
-    handleInput = e => this.setState({search: e.target.value})
+    handleFilter = e => this.setState({ [e.target.name]: e.target.value })
 
     getClients = async () => {
         let clients = await axios.get('http://localhost:3001/clients')
@@ -25,11 +26,22 @@ class Clients extends Component {
         this.setState({ clients })
     }
 
+    filterClients = () => {
+
+        if (this.state.selectedFilter !== "sold") {
+            return this.state.clients
+                .filter(c => c[this.state.selectedFilter].toLowerCase()
+                    .includes(this.state.searchFilter.toLowerCase()))
+        } else {
+            return this.state.clients.filter(c => c.sold)
+        }
+    }
+
     render() {
         return (
             <div>
-                <input type="text" placeholder="Search" value={this.state.search} onChange={this.handleInput} />
-                <select name="filter">
+                <input type="text" name="searchFilter" placeholder="Search" value={this.state.search} onChange={this.handleFilter} />
+                <select name="selectedFilter" value={this.state.selectedFilter} onChange={this.handleFilter}>
                     <option value="name">Name</option>
                     <option value="email">Email</option>
                     <option value="sold">Sold</option>
@@ -37,7 +49,7 @@ class Clients extends Component {
                     <option value="country">Country</option>
                 </select>
                 <TableHeader />
-                {this.state.clients.map(c => <ClientRow client={c} key={c._id}/>)}
+                {this.filterClients().map(c => <ClientRow client={c} key={c._id} />)}
             </div>
         )
     }

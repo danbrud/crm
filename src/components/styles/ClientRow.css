@@ -3,3 +3,7 @@
     grid-template-columns: repeat(7, 1fr);
 }
 
+.row-item {
+    display: grid;
+    justify-self: center;
+}
