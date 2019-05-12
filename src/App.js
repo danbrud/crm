@@ -8,6 +8,26 @@ import Analytics from './components/analytic-comps/Analytics';
 
 class App extends Component {
 
+  constructor() {
+    super()
+    this.state = {
+      data = []
+    }  
+  }
+
+  importData = () => {
+    
+  }
+
+  updateDB = async () => {
+    for(let d of this.state.data) {
+      let save = await axios.post('http://localhost:3001/clients', d)
+      console.log(save)
+    }
+    console.log("Finished saving")
+  }
+  }
+
   render() {
     return(
       <Router>
@@ -15,6 +35,8 @@ class App extends Component {
           <Link to='/clients'>CLIENTS</Link>
           <Link to='/actions'>ACTIONS</Link>
           <Link to='/analytics'>ANALYTICS</Link>
+
+          <button onClick={this.updateDB}>Update</button>
         </div>
 
         <Route exact path='/clients' render={() => <Clients />}/>

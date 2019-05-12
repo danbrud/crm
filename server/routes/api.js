@@ -7,11 +7,16 @@ router.get('/sanity', function (req, res) {
     res.send('OK!')
 })
 
+getClients = async () => Client.find({})
 
-
+router.get('/clients', async function(req, res) {
+    let clients = await getClients()
+    res.send(clients)
+})
 
 router.post('/clients', function (req, res) {
     let reqClient = req.body
+    console.log("saving")
 
     let newClient = new Client({
         _id: reqClient._id,
