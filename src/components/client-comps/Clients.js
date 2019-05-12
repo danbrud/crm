@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TableHeader from './TableHeader';
 import axios from 'axios'
+import ClientRow from './ClientRow';
 
 class Clients extends Component {
 
@@ -36,8 +37,7 @@ class Clients extends Component {
                     <option value="country">Country</option>
                 </select>
                 <TableHeader />
-                
-                All Client data here.
+                {this.state.clients.map(c => <ClientRow client={c} key={c._id}/>)}
             </div>
         )
     }
