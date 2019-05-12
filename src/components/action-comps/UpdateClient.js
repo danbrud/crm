@@ -37,7 +37,11 @@ class UpdateClient extends Component {
     }
 
     createOwnerDropdownElement = () => {
+        let availableOwners = []
+        this.state.clients.forEach(c => availableOwners.some(ao => ao === c.owner) ?
+                                                    null : availableOwners.push(c.owner))
 
+        return availableOwners.map(ao => <option value={ao}>{ao}</option>)
     }
 
     render() {
@@ -48,7 +52,9 @@ class UpdateClient extends Component {
 
                 <div className="update-client" id="transfer-ownership">
                     <p>Transfer ownership to:</p>
-                    <select name="" id=""></select>
+                    <select>
+                        {this.createOwnerDropdownElement()}
+                    </select>
                     <div id="transfer-btn">TRANSFER</div>
                 </div>
 
@@ -57,7 +63,7 @@ class UpdateClient extends Component {
                     {this.createEmailDropdownElement()}
                     <div id="send-email-btn">SEND</div>
                 </div>
-                
+
                 <div className="update-client" id="declare-sale">
                     <p>Declare sale!</p>
                     <div></div>
