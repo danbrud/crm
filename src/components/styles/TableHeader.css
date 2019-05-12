@@ -1,0 +1,11 @@
+#table-header {
+    background-color: #F7CE3E;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    height: 15%;
+}
+
+.header-item {
+    display: grid;
+    align-self: center;
+}
