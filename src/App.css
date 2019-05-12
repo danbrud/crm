@@ -23,6 +23,26 @@
   color: #61dafb;
 }
 
+#navbar {
+  height: 10vh;
+  background-color: #0a1612;
+}
+
+#navbar > a {
+  color: white;
+  text-decoration: none;
+  margin: 10px;
+}
+
+
+
+
+
+
+
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
