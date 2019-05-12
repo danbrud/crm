@@ -14,6 +14,12 @@ router.get('/clients', async function(req, res) {
     res.send(clients)
 })
 
+router.get('/clients/actions', async function(req, res) {
+    let clients = await getClients()
+    let mappedClients = clients.map(c => {return {_id: c._id, name: c.name, owner: c.owner}})
+    res.send(mappedClients)
+})
+
 router.post('/clients', function (req, res) {
     let reqClient = req.body
     console.log("saving")
