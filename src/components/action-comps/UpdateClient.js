@@ -49,7 +49,7 @@ class UpdateClient extends Component {
     }
 
     updateUser = async (propertyToUpdate, updateValue) => {
-        await axios.put(`client/${this.state.clientIdToUpdate}/${propertyToUpdate}`, updateValue)
+        await axios.put(`http://localhost:3001/client/${this.state.clientIdToUpdate}/?propToUpdate=${propertyToUpdate}`, {value: updateValue})
     }
 
     handleSelections = e => {
@@ -63,11 +63,13 @@ class UpdateClient extends Component {
         }
     }
 
-    transferOwnership = () => this.updateUser('owner', this.state.newOwner)
+    checkState = () => this.state.clientIdToUpdate ? true : false
 
-    sendEmail = () => this.updateUser('emailType', this.state.newEmailType)
+    transferOwnership = () => this.checkState() ? this.updateUser('owner', this.state.newOwner) : null
 
-    declareSale = () => this.updateUser('sold', true)
+    sendEmail = () => this.checkState() ? this.updateUser('emailType', this.state.newEmailType) : null
+
+    declareSale = () => this.checkState() ? this.updateUser('sold', true) : null
 
     render() {
         return (
@@ -81,19 +83,19 @@ class UpdateClient extends Component {
                         <option selected disabled={this.state.disableEmptySelect.newOwner ? true : null}> -- select an owner -- </option>
                         {this.createOwnerDropdownElement()}
                     </select>
-                    <div id="transfer-btn">TRANSFER</div>
+                    <div id="transfer-btn" onClick={this.transferOwnership}>TRANSFER</div>
                 </div>
 
                 <div className="update-client" id="send-email">
                     <p>Send email:</p>
                     {this.createEmailDropdownElement()}
-                    <div id="send-email-btn">SEND</div>
+                    <div id="send-email-btn" onClick={this.sendEmail}>SEND</div>
                 </div>
 
                 <div className="update-client" id="declare-sale">
                     <p>Declare sale!</p>
                     <div></div>
-                    <div id="declare-sale-btn">DECLARE</div>
+                    <div id="declare-sale-btn" onClick={this.declareSale}>DECLARE</div>
                 </div >
             </div >
         )
