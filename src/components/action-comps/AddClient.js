@@ -44,7 +44,7 @@ class AddClient extends Component {
     render() {
         return (
             <div id="create-action">
-                <h3>UPDATE</h3>
+                <h3>ADD CLIENT</h3>
                 <span>First name: </span>
                 <input type="text" name="firstName" value={this.state.firstName} onChange={this.handleInput} />
                 <span>Surname: </span>
