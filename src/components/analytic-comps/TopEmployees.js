@@ -55,7 +55,7 @@ class TopEmployees extends Component {
     generateTopEmployees = clients => {
         let numOfEmployees = 3
         let employeeSales = this.createOwnerClientObj(clients)
-        console.log(employeeSales)
+        
         let dataForChart = this.getDataForChart(numOfEmployees, employeeSales)
 
         return dataForChart
@@ -85,24 +85,6 @@ class TopEmployees extends Component {
                     <Bar dataKey="sales" barSize={25} fill="#413ea0" />
 
                 </ComposedChart>
-
-                {/* <ResponsiveContainer width='100%'> */}
-                {/* {<BarChart width={730} height={250} data={data} layout="vertical">
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis  />
-                        <YAxis dataKey="pv"/>
-                        <Legend />
-                        <Bar dataKey="name" fill="#8884d8" />
-                    </BarChart>} */}
-                {/* </ResponsiveContainer> */}
-
-                {/*  <BarChart width={730} height={250} data={this.state.data} layout="vertical">
-                    {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                {/* <XAxis dataKey="sales" />
-                    <YAxis reversed={true} dataKey="name" type="category" />
-                    <Bar dataKey="sales" fill="#8884d8" barSize={30} />
-                </BarChart> */}
-
             </div>
         )
     }
