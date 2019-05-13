@@ -20,17 +20,15 @@ router.get('/clients/actions', async function(req, res) {
     res.send(mappedClients)
 })
 
-router.post('/clients', function (req, res) {
+router.post('/client', function (req, res) {
     let reqClient = req.body
-    console.log("saving")
 
     let newClient = new Client({
-        _id: reqClient._id,
         name: reqClient.name,
         email: reqClient.email,
         firstContact: reqClient.firstContact,
-        emailType: reqClient.emailType,
-        sold: reqClient.sold,
+        emailType: null,
+        sold: false,
         owner: reqClient.owner,
         country: reqClient.country
     })
