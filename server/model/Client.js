@@ -3,7 +3,6 @@ const data = require('../data')
 const Schema = mongoose.Schema
 
 const clientSchema = new Schema({
-    _id: String,
     name: String,
     email: String,
     firstContact: Date,
