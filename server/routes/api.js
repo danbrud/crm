@@ -41,5 +41,15 @@ router.post('/clients', function (req, res) {
     })
 })
 
+router.put('/client/:id', function(req, res) {
+    let clientId = req.params.id
+    let propertyToUpdate = req.query.propToUpdate
+    let value = req.body.value
+
+    Client.findOneAndUpdate({_id: clientId}, {$set: {[propertyToUpdate]: value}}, function (client) {
+        res.send(`Updated client ${clientId}`)
+    })
+})
+
 
 module.exports = router
