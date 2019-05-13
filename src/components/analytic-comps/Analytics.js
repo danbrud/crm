@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Badges from './Badges'
 import axios from 'axios'
+import Charts from './Charts';
 
 class Analytics extends Component {
 
@@ -23,11 +24,11 @@ class Analytics extends Component {
     }
 
     render() {
-        console.log(this.state.clients)
 
         return (
             <div>
-                <Badges clients={this.state.clients}/>
+                <Badges clients={this.state.clients} />
+                <Charts clients={this.state.clients} />
             </div>
         )
     }

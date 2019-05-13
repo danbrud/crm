@@ -28,6 +28,10 @@
   background-color: #0a1612;
 }
 
+.body{
+  font-family: 'Montserrat', sans-serif;
+}
+
 #navbar > a {
   color: white;
   text-decoration: none;

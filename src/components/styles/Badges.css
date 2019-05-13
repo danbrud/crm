@@ -1,0 +1,50 @@
+.badge-container > .icon-container {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+.icon-container > i {
+    font-size: 50px;
+    color: white;
+}
+
+#badges-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 20px;
+}
+
+.badge-container {
+    display: grid;
+    grid-template-areas: 
+        "b v"
+        "b s";
+}
+
+.icon-container {
+    grid-area: b;
+    display: grid;
+    justify-self: center;
+    align-self: center;
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75)
+}
+
+.badge-value {
+    grid-area: v;
+    font-size: 35px;
+    display: grid;
+    justify-self: start;
+    align-self: center;
+}
+
+.badge-sentence {
+    grid-area: s;
+    display: grid;
+    justify-self: start;
+    align-self: center;
+}
+

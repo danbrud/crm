@@ -51,22 +51,26 @@ class Badges extends Component {
             newClients: {
                 data: this.getNumNewClients(clients),
                 icon: 'fas fa-chart-line',
-                sentence: `New ${this.getMonthName()} Clients`
+                sentence: `New ${this.getMonthName()} Clients`,
+                color: '#2ECC71'
             },
             emailsSent: {
                 data: this.getNumEmailsSent(clients),
                 icon: 'fas fa-envelope',
-                sentence: "Emails Sent"
+                sentence: "Emails Sent",
+                color: '#3498DB'
             },
             outstandingClients: {
                 data: this.getNumOutstandingClients(clients),
                 icon: 'fas fa-users',
-                sentence: "Outstanding Clients"
+                sentence: "Outstanding Clients",
+                color: '#E74C3C'
             },
             hottestCountry: {
                 data: this.getHottestCountry(clients),
                 icon: 'fas fa-globe-americas',
-                sentence: "Hottest Country"
+                sentence: "Hottest Country",
+                color: '#F1C40F'
             }
         }
 
@@ -80,7 +84,7 @@ class Badges extends Component {
         if(this.props.clients.length && this.state.isLoading) { this.setState({isLoading: false}) }
 
         return (
-            <div>
+            <div id="badges-container">
                 {this.state.isLoading ? "show loader" : badgeCategories.map(bc => <Badge key={bc} badgeCategory={badgeElements[bc]} />)}
             </div>
         )
