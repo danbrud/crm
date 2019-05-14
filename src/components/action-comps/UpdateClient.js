@@ -177,7 +177,7 @@ class UpdateClient extends Component {
 
             <div className="update-client" id="declare-sale">
 
-            <div id="declare-sale">Declare sale!</div>
+            <div id="declare-sale">Declare Sale!</div>
             <Button id="declare-sale-btn" onClick={this.declareSale} className="action-btn">DECLARE</Button>
 
                 {/* <p>Declare sale!</p>

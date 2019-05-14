@@ -65,20 +65,6 @@ class SalesBy extends Component {
         return dataArr
     }
 
-    // createOwnerClientObj = clients => {
-    //     let employeeSales = {}
-
-    //     clients.forEach(c => {
-    //         if (c.sold) {
-    //             employeeSales[c.owner] ? employeeSales[c.owner]++ : employeeSales[c.owner] = 1
-    //         }
-    //     })
-
-    //     return employeeSales
-    // }
-
-
-
     getChartDataBySelection = () => {
         if (this.state.selection === "country") {
             return this.generateSalesByDataPoint(this.props.clients, "country")
