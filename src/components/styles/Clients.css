@@ -1,0 +1,49 @@
+#search-clients-input {
+    border: none;
+    border-bottom: 1px grey solid;
+    height: 40px;
+    width: 300px;
+    margin-right: 5px;
+    padding-left: 10px;
+}
+
+#select-filter {
+    height: 43px;
+    width: 130px;
+    border: none;
+    border-bottom: 1px grey solid;
+    cursor: pointer;
+}
+
+#search-container {
+    margin: 10px;
+}
+
+#clients-page{
+    margin: 20px;
+}
+
+#paging {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#paging > i {
+    display: grid;
+    align-self: center;
+    cursor: pointer;
+}
+
+#paging > .fa-chevron-left {
+    justify-self: end;
+}
+
+#paging > p {
+    display: grid;
+    align-self: center;
+    justify-self: center;
+}
+
+#table {
+    margin: 10px;
+}

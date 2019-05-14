@@ -5,5 +5,5 @@
 
 .row-item {
     display: grid;
-    justify-self: center;
+    justify-self: start;
 }

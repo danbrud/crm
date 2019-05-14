@@ -30,12 +30,31 @@
 
 .body{
   font-family: 'Montserrat', sans-serif;
+  background-color: #465e5e;
 }
 
-#navbar > a {
+.nav-link > a {
   color: white;
   text-decoration: none;
-  margin: 10px;
+  margin: 20px;
+  width:100%;
+  height: 100%;
+  display: grid;
+  align-self: center;
+}
+
+.page-selected {
+  background-color: #34434A;
+}
+
+.nav-link {
+  margin-left: 20px;
+  display: inline-block;
+  height: 100%;
+}
+
+.nav-link:hover {
+  background-color: #34434A;
 }
 
 

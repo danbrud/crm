@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import UpdateClient from './UpdateClient';
 import AddClient from './AddClient';
+import Divider from '@material-ui/core/Divider';
 
 class Actions extends Component {
 
@@ -8,6 +9,7 @@ class Actions extends Component {
         return(
             <div>
                 <UpdateClient />
+                <Divider variant="middle" />
                 <AddClient />
             </div>
         )
