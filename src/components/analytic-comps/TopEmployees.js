@@ -3,14 +3,6 @@ import { ComposedChart, ResponsiveContainer, CartesianAxis, BarChart, CartesianG
 
 class TopEmployees extends Component {
 
-    /* constructor(props) {
-        super(props)
-        this.state = {
-            clients: this.props.clients,
-            dataForChart: this.generateTopEmployees(this.props.clients)
-        }
-    } */
-
     createOwnerClientObj = clients => {
         let employeeSales = {}
 
@@ -23,40 +15,25 @@ class TopEmployees extends Component {
         return employeeSales
     }
 
-    getDataForChart = (numOfEmployees, employeeSales) => {
-        let dataForChart = []
-        let employeeNames = Object.keys(employeeSales)
+    createDataArray = (employeeSales) => {
+        let dataArr = []
+        let employees = Object.keys(employeeSales)
 
-        for (let i = 0; i < employeeNames.length; i++) {
-            if (dataForChart.length === numOfEmployees) { break }
+        employees.forEach(e => {
+            dataArr.push({name: e, sales: employeeSales[e]})
+        })
 
-            let highestSales = 0
-            let employeeName = ''
-
-            for (let j = 0; j < employeeNames.length; j++) {
-                if (employeeSales[employeeNames[j]] > highestSales) {
-                    highestSales = employeeSales[employeeNames[j]]
-                    employeeName = employeeNames[j]
-                }
-            }
-
-            
-            let indexOfEmployee = employeeNames.findIndex(en => en === employeeName)
-            employeeNames.splice(indexOfEmployee, 1)
-
-            if (!dataForChart.some(d => d.name === employeeName)) {
-                dataForChart.unshift({ name: employeeName, sales: highestSales })
-            }
-        }
-
-        return dataForChart
+        return dataArr
     }
 
     generateTopEmployees = clients => {
         let numOfEmployees = 3
         let employeeSales = this.createOwnerClientObj(clients)
         
-        let dataForChart = this.getDataForChart(numOfEmployees, employeeSales)
+        let dataForChart = this.createDataArray(employeeSales)
+        
+        dataForChart = dataForChart.sort((a, b) =>  a.sales - b.sales)
+        dataForChart.splice(0, dataForChart.length - numOfEmployees)
 
         return dataForChart
     }

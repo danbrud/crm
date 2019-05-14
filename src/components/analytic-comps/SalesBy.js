@@ -31,11 +31,7 @@ class SalesBy extends Component {
             "Dec": 12
           }
 
-          let sortedMonths = monthsArr.sort(function(a, b) {
-            return monthsOrder[a] - monthsOrder[b]
-          })
-
-          return sortedMonths
+          return monthsArr.sort((a, b) => monthsOrder[a] - monthsOrder[b])
     }
 
     createDataObject = (clients, selection) => {
