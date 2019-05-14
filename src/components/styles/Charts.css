@@ -1,0 +1,24 @@
+#first-two {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+#charts-container {
+    margin: 30px;
+}
+
+.chart > h5 {
+    margin: 0;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+#sales-by-selection {
+    background-color: #ECF0F1;
+    border: none;
+    border-bottom: 0.5px darkgray solid;
+    width: 100px;
+    color: grey;
+    margin-left: 10px;
+    cursor: pointer;
+}

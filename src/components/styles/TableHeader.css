@@ -2,10 +2,14 @@
     background-color: #F7CE3E;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    height: 15%;
+    height: 45px;
+    box-shadow: 0px 0px 7px -1px rgba(0,0,0,0.75);
+    margin-bottom: 8px;
+    margin-top: 15px;
 }
 
 .header-item {
     display: grid;
     align-self: center;
+    margin-left: 4px;
 }

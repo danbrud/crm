@@ -21,8 +21,8 @@ class ClientInput extends Component {
     render() {
         return (
             <div>
-                <p>Client: </p>
-                <input type="text" placeholder="Client Name" list="clients" value={this.state.selectedName} onInput={this.updateName}/>
+                <span>Client: </span>
+                <input type="text" id="update-client-input" placeholder="Client Name" list="clients" value={this.state.selectedName} onInput={this.updateName}/>
                 <datalist id="clients">
                     {this.createDataListOptions()}
                 </datalist>

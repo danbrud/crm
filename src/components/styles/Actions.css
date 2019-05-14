@@ -1,0 +1,64 @@
+#update-action > .update-client {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#declare-sale {
+    display: grid;
+    align-self: end;
+}
+
+#send-email-btn {
+    margin-left: 20px;
+    width: 100px;
+    color: rgb(236, 192, 30);
+}
+
+#declare-sale-btn {
+    margin-left: 20px;
+    width: 100px;
+    color: rgb(236, 192, 30);
+}
+
+#transfer-btn {
+    margin-left: 20px;
+    width: 100px;
+    color: rgb(236, 192, 30);
+}
+
+#actions {
+    margin: 20px;
+}
+
+#update-client-input {
+    background-color: #ECF0F1;
+    margin-left: 5px;
+    border: none;
+    border-bottom: 1px grey solid;
+    font-size: 14px;
+}
+
+.update-client {
+    margin: 10px;
+}
+
+#input-fields {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    margin: 10px;
+}
+
+.standard-name {
+    width: 200px;
+}
+
+#create-action > h4 {
+    margin-bottom: 0;
+}
+
+#add-client-btn {
+    margin-top: 20px;
+    width: 200px;
+    background-color: #F7CE3E;
+    color: rgb(34, 33, 33);
+}

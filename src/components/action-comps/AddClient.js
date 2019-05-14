@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 class AddClient extends Component {
 
@@ -44,8 +46,51 @@ class AddClient extends Component {
     render() {
         return (
             <div id="create-action">
-                <h3>UPDATE</h3>
-                <span>First name: </span>
+                <h4>ADD CLIENT</h4>
+
+                <div id="input-fields">
+
+
+                    <TextField
+                        className="standard-name"
+                        label="First Name"
+                        name="firstName"
+                        value={this.state.firstName} onChange={this.handleInput}
+                        margin="none"
+                    />
+
+                    <TextField
+                        className="standard-name"
+                        label="Surname"
+                        name="surname" value={this.state.surname} onChange={this.handleInput}
+                        margin="none"
+                    />
+
+                    <TextField
+                        className="standard-name"
+                        label="Email"
+                        name="email" value={this.state.email} onChange={this.handleInput}
+                        margin="none"
+                    />
+
+                    <TextField
+                        className="standard-name"
+                        label="Country"
+                        name="country" value={this.state.country} onChange={this.handleInput}
+                        margin="none"
+                    />
+
+                    <TextField
+                        className="standard-name"
+                        label="Owner"
+                        name="owner" value={this.state.owner} onChange={this.handleInput}
+                        margin="none"
+                    />
+
+                    <Button id="add-client-btn" onClick={this.addClient} variant="contained" color="primary">Add New Client</Button>
+
+                </div>
+                {/* <span>First name: </span>
                 <input type="text" name="firstName" value={this.state.firstName} onChange={this.handleInput} />
                 <span>Surname: </span>
                 <input type="text" name="surname" value={this.state.surname} onChange={this.handleInput} />
@@ -54,8 +99,8 @@ class AddClient extends Component {
                 <span>Country: </span>
                 <input type="text" name="country" value={this.state.country} onChange={this.handleInput} />
                 <span>Owner: </span>
-                <input type="text" name="owner" value={this.state.owner} onChange={this.handleInput} />
-                <div id="add-client-btn" onClick={this.addClient}>Add New Client</div>
+                <input type="text" name="owner" value={this.state.owner} onChange={this.handleInput} /> */}
+                {/* <div id="add-client-btn" onClick={this.addClient}>Add New Client</div> */}
             </div>
         )
     }
