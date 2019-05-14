@@ -30,6 +30,14 @@ class AddClient extends Component {
         await axios.post('http://localhost:3001/client', client)
     }
 
+    clearInputs = () => this.setState({
+        firstName: "",
+        surname: "",
+        email: "",
+        country: "",
+        owner: ""
+    })
+
     addClient = () => {
         if (this.isStateSet()) {
             let client = {
@@ -40,6 +48,8 @@ class AddClient extends Component {
                 country: this.state.country
             }
             this.saveClient(client)
+            this.clearInputs()
+            this.props.showSuccess("Added")
         }
     }
 
@@ -90,17 +100,6 @@ class AddClient extends Component {
                     <Button id="add-client-btn" onClick={this.addClient} variant="contained" color="primary">Add New Client</Button>
 
                 </div>
-                {/* <span>First name: </span>
-                <input type="text" name="firstName" value={this.state.firstName} onChange={this.handleInput} />
-                <span>Surname: </span>
-                <input type="text" name="surname" value={this.state.surname} onChange={this.handleInput} />
-                <span>Email: </span>
-                <input type="text" name="email" value={this.state.email} onChange={this.handleInput} />
-                <span>Country: </span>
-                <input type="text" name="country" value={this.state.country} onChange={this.handleInput} />
-                <span>Owner: </span>
-                <input type="text" name="owner" value={this.state.owner} onChange={this.handleInput} /> */}
-                {/* <div id="add-client-btn" onClick={this.addClient}>Add New Client</div> */}
             </div>
         )
     }
