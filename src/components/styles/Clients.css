@@ -5,6 +5,7 @@
     width: 300px;
     margin-right: 5px;
     padding-left: 10px;
+    background-color: #ecf0f1;
 }
 
 #select-filter {
@@ -13,6 +14,7 @@
     border: none;
     border-bottom: 1px grey solid;
     cursor: pointer;
+    background-color: #ecf0f1;
 }
 
 #search-container {

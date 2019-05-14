@@ -46,45 +46,45 @@ class AddClient extends Component {
     render() {
         return (
             <div id="create-action">
-                <h3>ADD CLIENT</h3>
+                <h4>ADD CLIENT</h4>
 
                 <div id="input-fields">
 
 
                     <TextField
-                        id="standard-name"
+                        className="standard-name"
                         label="First Name"
                         name="firstName"
                         value={this.state.firstName} onChange={this.handleInput}
-                        margin="normal"
+                        margin="none"
                     />
 
                     <TextField
-                        id="standard-name"
+                        className="standard-name"
                         label="Surname"
                         name="surname" value={this.state.surname} onChange={this.handleInput}
-                        margin="normal"
+                        margin="none"
                     />
 
                     <TextField
-                        id="standard-name"
+                        className="standard-name"
                         label="Email"
                         name="email" value={this.state.email} onChange={this.handleInput}
-                        margin="normal"
+                        margin="none"
                     />
 
                     <TextField
-                        id="standard-name"
+                        className="standard-name"
                         label="Country"
                         name="country" value={this.state.country} onChange={this.handleInput}
-                        margin="normal"
+                        margin="none"
                     />
 
                     <TextField
-                        id="standard-name"
+                        className="standard-name"
                         label="Owner"
                         name="owner" value={this.state.owner} onChange={this.handleInput}
-                        margin="normal"
+                        margin="none"
                     />
 
                     <Button id="add-client-btn" onClick={this.addClient} variant="contained" color="primary">Add New Client</Button>

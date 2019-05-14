@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ClientInput from './ClientInput';
 import axios from 'axios';
-import '../styles/UpdateClient.css'
+import '../styles/Actions.css'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
@@ -127,7 +127,7 @@ class UpdateClient extends Component {
 
         return (
             <div id="update-action">
-                <h3>UPDATE</h3>
+                <h4>UPDATE</h4>
 
 
                 <ClientInput updateClientID={this.updateClientID} clients={this.state.clients} />
@@ -177,7 +177,7 @@ class UpdateClient extends Component {
 
             <div className="update-client" id="declare-sale">
 
-            <div>Declare sale!</div>
+            <div id="declare-sale">Declare sale!</div>
             <Button id="declare-sale-btn" onClick={this.declareSale} className="action-btn">DECLARE</Button>
 
                 {/* <p>Declare sale!</p>

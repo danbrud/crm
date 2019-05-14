@@ -1,6 +1,11 @@
 .client-row {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 20px; 
+    border-bottom: 0.5px grey solid;
+    padding-bottom: 5px;
 }
 
 .row-item {

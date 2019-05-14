@@ -10,13 +10,7 @@ class Badges extends Component {
         }
     }
 
-    getMonthName = () => {
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"]
-        const currentMonth = new Date().getMonth()
-
-        return monthNames[currentMonth];
-    }
+    getMonthName = (date = new Date()) => new Intl.DateTimeFormat('en-US', {month: "long"}).format(date)
 
     getNumNewClients = clients => {
         const currentMonth = new Date().getMonth()

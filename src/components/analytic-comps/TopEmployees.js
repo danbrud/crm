@@ -3,13 +3,13 @@ import { ComposedChart, ResponsiveContainer, CartesianAxis, BarChart, CartesianG
 
 class TopEmployees extends Component {
 
-    constructor(props) {
+    /* constructor(props) {
         super(props)
         this.state = {
             clients: this.props.clients,
             dataForChart: this.generateTopEmployees(this.props.clients)
         }
-    }
+    } */
 
     createOwnerClientObj = clients => {
         let employeeSales = {}
@@ -66,7 +66,8 @@ class TopEmployees extends Component {
         let dataForChart = this.generateTopEmployees(this.props.clients)
 
         return (
-            <div>
+            <div id="top-emp" className="chart">
+            <h5>Top Employees</h5>
                 <ComposedChart
                     layout="vertical"
                     width={500}
@@ -82,7 +83,7 @@ class TopEmployees extends Component {
                     <Tooltip />
                     <Legend />
 
-                    <Bar dataKey="sales" barSize={25} fill="#413ea0" />
+                    <Bar dataKey="sales" barSize={25} fill="#003f5c" />
 
                 </ComposedChart>
             </div>

@@ -7,9 +7,9 @@ class Actions extends Component {
 
     render() {
         return(
-            <div>
+            <div id="actions">
                 <UpdateClient />
-                <Divider variant="middle" />
+                <Divider id="divider" variant="middle" />
                 <AddClient />
             </div>
         )
