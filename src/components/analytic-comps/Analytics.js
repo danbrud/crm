@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import Badges from './Badges'
 import axios from 'axios'
 import Charts from './Charts';
+import '../styles/Analytics.css'
 
 class Analytics extends Component {
 
     constructor() {
         super()
         this.state = {
-            clients: []
+            clients: [],
+            isLoading: true
         }
     }
 
@@ -20,15 +22,33 @@ class Analytics extends Component {
 
     componentDidMount = async () => {
         let clients = await this.getClients()
-        this.setState({ clients })
+        this.setState({ clients, isLoading: false })
+    }
+
+    showLoader = () => {
+        return (
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        )
+    }
+
+    showData = () => {
+        return (
+            <div>
+                <Badges clients={this.state.clients} />
+                <Charts clients={this.state.clients} />
+            </div>
+        )
     }
 
     render() {
 
         return (
             <div>
-                <Badges clients={this.state.clients} />
-                <Charts clients={this.state.clients} />
+                {this.state.isLoading ? this.showLoader() : this.showData()}
             </div>
         )
     }
