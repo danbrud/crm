@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Route, Link, Redirect} from 'react-router-dom'
 import Clients from './components/client-comps/Clients';
 import Actions from './components/action-comps/Actions';
 import Analytics from './components/analytic-comps/Analytics';
+import Home from './components/Home';
 
 class App extends Component {
 
@@ -23,6 +24,8 @@ class App extends Component {
 
   isAnalyticSelected = () => this.state.pageName === 'analytics' ? true : false
 
+  redirectPage = () => this.setState({pageName: 'clients'})
+
   render() {
 
     let clientSelectedClass = this.isClientSelected() ? "page-selected" : "page-not-selected"
@@ -38,6 +41,7 @@ class App extends Component {
           <div className={`${analyticSelectedClass} nav-link`}><Link to='/analytics' name="analytics" onClick={this.changePage}>ANALYTICS</Link></div>
         </div>
 
+        <Route exact path='/' render={() => <Home redirectPage={this.redirectPage} />} />
         <Route exact path='/clients' render={() => <Clients />}/>
         <Route exact path='/actions' render={() => <Actions />}/>
         <Route exact path='/analytics' render={() => <Analytics />}/>
