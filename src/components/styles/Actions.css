@@ -62,3 +62,25 @@
     background-color: #F7CE3E;
     color: rgb(34, 33, 33);
 }
+
+#saved-message {
+    background-color: #2ecc71;
+    position: absolute;
+    bottom: -65px;
+    right: 10px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#saved-ok-btn {
+    background-color: rgb(129, 129, 129);
+    color: white;
+    margin-left: 5px;
+    padding: 3px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#saved-ok-btn:hover {
+    background-color: rgb(141, 138, 138);
+}
