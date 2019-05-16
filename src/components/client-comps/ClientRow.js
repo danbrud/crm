@@ -18,11 +18,18 @@ class ClientRow extends Component {
         return `${month}/${day}/${year}`
     }
 
+    popModal = () => {
+        let name = this.getPartOfName(this.props.client.name, "first")
+        let surname = this.getPartOfName(this.props.client.name, 'surname')
+
+        this.props.popModal(name, surname, this.props.client.country, this.props.client._id)
+    }
+
     render() {
         let client = this.props.client
 
         return(
-            <div className="client-row">
+            <div className="client-row" onDoubleClick={this.popModal}>
                 <div className="row-item">{this.getPartOfName(client.name, 'first')}</div>
                 <div className="row-item">{this.getPartOfName(client.name, 'surname')}</div>
                 <div className="row-item">{client.country}</div>

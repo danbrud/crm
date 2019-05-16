@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Client = require('../model/Client')
+const mongoose = require('mongoose')
 
 
 router.get('/sanity', function (req, res) {
@@ -39,12 +40,24 @@ router.post('/client', function (req, res) {
     })
 })
 
-router.put('/client/:id', function(req, res) {
+router.put('/client/:id', async function(req, res) {
     let clientId = req.params.id
     let propertyToUpdate = req.query.propToUpdate
     let value = req.body.value
+    
+    Client.findOneAndUpdate({_id: clientId}, {$set: {[propertyToUpdate]: value}}, function(err, client) {
+        res.send(client)
+    })
+})
 
-    Client.findOneAndUpdate({_id: clientId}, {$set: {[propertyToUpdate]: value}}, function (client) {
+router.put('/client/modal/:id', function(req, res) {
+    let clientId = req.params.id
+    let reqClient = req.body
+
+    // if(`${reqClient.name} ${reqClient.surname}` === currentClient.name) { delete reqClient.name }
+    // if(reqClient.country === currentClient.country) { delete reqClient.country }
+
+    Client.findOneAndUpdate({_id: clientId}, {$set: {name: reqClient.name, country: reqClient.country}}, function (err, client) {
         res.send(`Updated client ${clientId}`)
     })
 })

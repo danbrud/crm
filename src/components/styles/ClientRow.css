@@ -6,6 +6,7 @@
     margin-top: 20px; 
     border-bottom: 0.5px grey solid;
     padding-bottom: 5px;
+    cursor: pointer;
 }
 
 .row-item {

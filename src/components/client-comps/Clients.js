@@ -3,6 +3,7 @@ import TableHeader from './TableHeader';
 import axios from 'axios'
 import ClientRow from './ClientRow';
 import '../styles/Clients.css'
+import Modal from './Modal';
 
 
 class Clients extends Component {
@@ -13,7 +14,9 @@ class Clients extends Component {
             clients: [],
             searchFilter: "",
             selectedFilter: "name",
-            pageNum: 1
+            pageNum: 1,
+            showModal: false,
+            modalClient: {}
         }
     }
 
@@ -70,6 +73,18 @@ class Clients extends Component {
         )
     }
 
+    popModal = (name, surname, country, id) => {
+        let modalClient = {name, surname, country, id}
+        this.setState({showModal: true, modalClient})
+    }
+
+    closeModal = () => this.setState({showModal: false, modalClient: {}})
+
+    updateClient = async () => {
+        let clients = await this.getClients()
+        this.setState({showModal: false, modalClient: {}, clients})
+    }
+
     render() {
 
         return (
@@ -87,9 +102,16 @@ class Clients extends Component {
                 </div>
                 <div id="table">
                     <TableHeader />
-                    {this.filterClients().map(c => <ClientRow client={c} key={c._id} />)}
+                    {this.filterClients().map(c => <ClientRow popModal={this.popModal} client={c} key={c._id} />)}
                     {this.showCurrentClientNum()}
                 </div>
+                {this.state.showModal ? <Modal 
+                                name={this.state.modalClient.name} 
+                                surname={this.state.modalClient.surname} 
+                                country={this.state.modalClient.country}
+                                id={this.state.modalClient.id}
+                                closeModal={this.closeModal}
+                                updateClient={this.updateClient} /> : null}
             </div>
         )
     }
