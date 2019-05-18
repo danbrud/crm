@@ -49,7 +49,9 @@ class AddClient extends Component {
             }
             this.saveClient(client)
             this.clearInputs()
-            this.props.showSuccess("Added")
+            this.props.showSnackbar("Added")
+        } else {
+            this.props.showSnackbar("Not added")
         }
     }
 

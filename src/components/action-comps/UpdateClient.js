@@ -17,17 +17,17 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     root: {
-      display: 'flex',
-      flexWrap: 'wrap',
+        display: 'flex',
+        flexWrap: 'wrap',
     },
     formControl: {
-      margin: theme.spacing.unit,
-      minWidth: 120,
+        margin: theme.spacing.unit,
+        minWidth: 120,
     },
     selectEmpty: {
-      marginTop: theme.spacing.unit * 2,
+        marginTop: theme.spacing.unit * 2,
     },
-  });
+});
 
 class UpdateClient extends Component {
 
@@ -118,11 +118,32 @@ class UpdateClient extends Component {
 
     checkState = () => this.state.clientIdToUpdate ? true : false
 
-    transferOwnership = () => this.checkState() ? this.updateUser('owner', this.state.newOwner) : null
+    transferOwnership = () => {
+        if (this.checkState()) {
+            this.updateUser('owner', this.state.newOwner)
+            this.props.showSnackbar("Updated")
+        } else {
+            this.props.showSnackbar("Not updated")
+        }
+    }
 
-    sendEmail = () => this.checkState() ? this.updateUser('emailType', this.state.newEmailType) : null
+    sendEmail = () => {
+        if (this.checkState()) {
+            this.updateUser('emailType', this.state.newEmailType)
+            this.props.showSnackbar("Updated")
+        } else {
+            this.props.showSnackbar("Not updated")
+        }
+    }
 
-    declareSale = () => this.checkState() ? this.updateUser('sold', true) : null
+    declareSale = () => {
+        if (this.checkState()) {
+            this.updateUser('sold', true)
+            this.props.showSnackbar("Updated")
+        } else {
+            this.props.showSnackbar("Not updated")
+        }
+    }
 
     render() {
 
@@ -171,20 +192,20 @@ class UpdateClient extends Component {
                     </FormControl>
                     <Button id="send-email-btn" onClick={this.sendEmail} className="action-btn">SEND</Button>
 
-                {/* <p>Send email:</p>
+                    {/* <p>Send email:</p>
                     {this.createEmailDropdownElement()}
                     <div id="send-email-btn" onClick={this.sendEmail}>SEND</div> */}
-            </div>
+                </div>
 
-            <div className="update-client" id="declare-sale">
+                <div className="update-client" id="declare-sale">
 
-            <div id="declare-sale">Declare Sale!</div>
-            <Button id="declare-sale-btn" onClick={this.declareSale} className="action-btn">DECLARE</Button>
+                    <div id="declare-sale">Declare Sale!</div>
+                    <Button id="declare-sale-btn" onClick={this.declareSale} className="action-btn">DECLARE</Button>
 
-                {/* <p>Declare sale!</p>
+                    {/* <p>Declare sale!</p>
                     <div></div>
                     <div id="declare-sale-btn" onClick={this.declareSale}>DECLARE</div> */}
-            </div >
+                </div >
             </div >
         )
     }

@@ -84,3 +84,16 @@
 #saved-ok-btn:hover {
     background-color: rgb(141, 138, 138);
 }
+/* 
+#actions > .MuiSnackbar-root-107 {
+    background-color: white;
+    width: 200px;
+    border-radius: 10px;
+    position: absolute;
+    margin-left: 70%;
+    bottom: -80px;
+} */
+
+/* .MuiSnackbarContent-message-122 > #message-id {
+    width: 100px;
+} */
