@@ -45,11 +45,11 @@ class TopEmployees extends Component {
         return (
             <div id="top-emp" className="chart">
                 <h5>Top Employees</h5>
-                <ResponsiveContainer width='100%'  >
+                <ResponsiveContainer width='100%' height="100%"  >
                     <ComposedChart
                         layout="vertical"
-                        width={500}
-                        height={250}
+                        // width={500}
+                        // height={250}
                         data={dataForChart}
                         margin={{
                             top: 20, right: 20, bottom: 20, left: 20,
