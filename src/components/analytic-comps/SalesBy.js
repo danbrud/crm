@@ -90,16 +90,16 @@ class SalesBy extends Component {
                     <option value="month">Month</option>
                     <option value="owner">Owner</option>
                 </select>
-                <ResponsiveContainer width='100%' height="100%"  >
-                    <BarChart /* width={700} height={250} */ data={data}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="sales" fill="#955196" />
-                    </BarChart>
-                </ResponsiveContainer>
+
+                <BarChart width={700} height={250} data={data}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="sales" fill="#955196" />
+                </BarChart>
+
             </div>
         )
     }

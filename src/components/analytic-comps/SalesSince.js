@@ -57,22 +57,22 @@ class SalesSince extends Component {
         return (
             <div>
                 <h5>Sales since {`${this.getFullMonth(this.getHistoricalDate(30))} ${this.getHistoricalDate(30).getDate()}`}</h5>
-                <ResponsiveContainer width='100%' height="100%"  >
-                    <LineChart
-                        // width={700}
-                        // height={300}
-                        data={data}
-                        margin={{
-                            top: 5, right: 30, left: 20, bottom: 5,
-                        }}
-                    >
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line dot={false} type="monotone" dataKey="sales" stroke="#FE7259" strokeWidth={3} />
-                    </LineChart>
-                </ResponsiveContainer>
+
+                <LineChart
+                    width={700}
+                    height={300}
+                    data={data}
+                    margin={{
+                        top: 5, right: 30, left: 20, bottom: 5,
+                    }}
+                >
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line dot={false} type="monotone" dataKey="sales" stroke="#FE7259" strokeWidth={3} />
+                </LineChart>
+
             </div>
         )
     }
