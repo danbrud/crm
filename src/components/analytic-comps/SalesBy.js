@@ -29,9 +29,9 @@ class SalesBy extends Component {
             "Oct": 10,
             "Nov": 11,
             "Dec": 12
-          }
+        }
 
-          return monthsArr.sort((a, b) => monthsOrder[a] - monthsOrder[b])
+        return monthsArr.sort((a, b) => monthsOrder[a] - monthsOrder[b])
     }
 
     createDataObject = (clients, selection) => {
@@ -90,14 +90,16 @@ class SalesBy extends Component {
                     <option value="month">Month</option>
                     <option value="owner">Owner</option>
                 </select>
-                <BarChart width={700} height={250} data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="sales" fill="#955196" />
-                </BarChart>
+                <ResponsiveContainer width='100%'  >
+                    <BarChart width={700} height={250} data={data}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="sales" fill="#955196" />
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
         )
     }
