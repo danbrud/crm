@@ -27,7 +27,7 @@ class AddClient extends Component {
     }
 
     saveClient = async (client) => {
-        await axios.post('http://localhost:3001/client', client)
+        await axios.post('/client', client)
     }
 
     clearInputs = () => this.setState({

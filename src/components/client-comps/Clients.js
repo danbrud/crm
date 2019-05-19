@@ -23,7 +23,7 @@ class Clients extends Component {
     handleFilter = e => this.setState({ [e.target.name]: e.target.value })
 
     getClients = async () => {
-        let clients = await axios.get('http://localhost:3001/clients')
+        let clients = await axios.get('/clients')
         return clients.data
     }
 

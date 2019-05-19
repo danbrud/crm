@@ -45,7 +45,7 @@ class UpdateClient extends Component {
     updateClientID = clientIdToUpdate => this.setState({ clientIdToUpdate })
 
     getClients = async () => {
-        let clients = await axios.get('http://localhost:3001/clients/actions')
+        let clients = await axios.get('/clients/actions')
         return clients.data
     }
 
@@ -102,7 +102,7 @@ class UpdateClient extends Component {
     }
 
     updateUser = async (propertyToUpdate, updateValue) => {
-        await axios.put(`http://localhost:3001/client/${this.state.clientIdToUpdate}/?propToUpdate=${propertyToUpdate}`, { value: updateValue })
+        await axios.put(`/client/${this.state.clientIdToUpdate}/?propToUpdate=${propertyToUpdate}`, { value: updateValue })
     }
 
     handleSelections = e => {
