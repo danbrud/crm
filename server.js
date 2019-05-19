@@ -8,6 +8,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/crmDB", { useNe
 const app = express()
 const api = require('./server/routes/api')
 
+app.use(express.static(path.join(__dirname, 'build')))
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use('/', api)
