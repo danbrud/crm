@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { PieChart, Pie, Tooltip } from 'recharts';
+import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
 
 class ClientAcquisition extends Component {
 

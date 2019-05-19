@@ -51,3 +51,4 @@ class App extends Component {
 }
 
 export default App;
+// "build": "react-scripts build",
