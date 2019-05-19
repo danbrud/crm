@@ -2,16 +2,10 @@ import React, { Component } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 class SalesSince extends Component {
-    // constructor() {
-    //     super()
-    //     this.state = {
-            
-    //     }
-    // }
 
     getHistoricalDate = daysBack => {
         let currentDate = new Date()
-        currentDate.setDate(currentDate.getDate() - daysBack);
+        currentDate.setDate(currentDate.getDate() - daysBack)
 
         return currentDate
     }
