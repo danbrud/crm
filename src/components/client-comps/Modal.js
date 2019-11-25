@@ -35,7 +35,7 @@ class Modal extends Component {
             country: this.state.countryInput 
         }
 
-        await axios.put(`/client/modal/${this.props.id}`, client)
+        await axios.put(`/api/client/modal/${this.props.id}`, client)
         this.props.updateClient()
     }
 
