@@ -8,7 +8,6 @@ class Home extends Component {
         this.props.redirectPage()
 
         return(
-            // <div>Danny</div>
             <Redirect to="/clients" />
         )
     }
