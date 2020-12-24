@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { API_ENDPOINT } from '../../config';
 
 class AddClient extends Component {
 
@@ -27,7 +28,7 @@ class AddClient extends Component {
     }
 
     saveClient = async (client) => {
-        await axios.post('/client', client)
+        await axios.post(`${API_ENDPOINT}/client`, client)
     }
 
     clearInputs = () => this.setState({

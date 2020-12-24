@@ -2,32 +2,27 @@ import React, { Component } from 'react'
 import ClientInput from './ClientInput';
 import axios from 'axios';
 import '../styles/Actions.css'
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import { API_ENDPOINT } from '../../config';
 
 
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing.unit * 2,
-    },
-});
+// const styles = theme => ({
+//     root: {
+//         display: 'flex',
+//         flexWrap: 'wrap',
+//     },
+//     formControl: {
+//         margin: theme.spacing.unit,
+//         minWidth: 120,
+//     },
+//     selectEmpty: {
+//         marginTop: theme.spacing.unit * 2,
+//     },
+// });
 
 class UpdateClient extends Component {
 
@@ -45,7 +40,7 @@ class UpdateClient extends Component {
     updateClientID = clientIdToUpdate => this.setState({ clientIdToUpdate })
 
     getClients = async () => {
-        let clients = await axios.get('/api/clients/actions')
+        let clients = await axios.get(`${API_ENDPOINT}/api/clients/actions`)
         return clients.data
     }
 
@@ -102,7 +97,7 @@ class UpdateClient extends Component {
     }
 
     updateUser = async (propertyToUpdate, updateValue) => {
-        await axios.put(`/api/client/${this.state.clientIdToUpdate}/?propToUpdate=${propertyToUpdate}`, { value: updateValue })
+        await axios.put(`${API_ENDPOINT}/api/client/${this.state.clientIdToUpdate}/?propToUpdate=${propertyToUpdate}`, { value: updateValue })
     }
 
     handleSelections = e => {

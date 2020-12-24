@@ -4,6 +4,7 @@ import axios from 'axios'
 import ClientRow from './ClientRow';
 import '../styles/Clients.css'
 import Modal from './Modal';
+import { API_ENDPOINT } from '../../config';
 
 
 class Clients extends Component {
@@ -23,7 +24,7 @@ class Clients extends Component {
     handleFilter = e => this.setState({ [e.target.name]: e.target.value })
 
     getClients = async () => {
-        let clients = await axios.get('/api/clients')
+        let clients = await axios.get(`${API_ENDPOINT}/api/clients`)
         return clients.data
     }
 
@@ -105,9 +106,9 @@ class Clients extends Component {
                     {this.filterClients().map(c => <ClientRow popModal={this.popModal} client={c} key={c._id} />)}
                     {this.showCurrentClientNum()}
                 </div>
-                {this.state.showModal ? <Modal 
-                                name={this.state.modalClient.name} 
-                                surname={this.state.modalClient.surname} 
+                {this.state.showModal ? <Modal
+                                name={this.state.modalClient.name}
+                                surname={this.state.modalClient.surname}
                                 country={this.state.modalClient.country}
                                 id={this.state.modalClient.id}
                                 closeModal={this.closeModal}

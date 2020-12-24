@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ComposedChart, ResponsiveContainer, CartesianAxis, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts'
+import { ComposedChart, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts'
 
 class TopEmployees extends Component {
 

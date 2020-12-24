@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import { API_ENDPOINT } from '../../config';
 
 class Modal extends Component {
 
@@ -15,8 +16,8 @@ class Modal extends Component {
     handleInput = e => this.setState({ [e.target.name]: e.target.value })
 
     userChangedInput = () => {
-        if (this.state.nameInput === this.props.name && 
-            this.state.surnameInput === this.props.surname && 
+        if (this.state.nameInput === this.props.name &&
+            this.state.surnameInput === this.props.surname &&
             this.state.countryInput === this.props.country) {
 
             return false
@@ -29,13 +30,13 @@ class Modal extends Component {
             alert("Please change a field or click the 'x' to exit.")
             return
         }
-        
-        let client = { 
-            name: `${this.state.nameInput} ${this.state.surnameInput}`, 
-            country: this.state.countryInput 
+
+        let client = {
+            name: `${this.state.nameInput} ${this.state.surnameInput}`,
+            country: this.state.countryInput
         }
 
-        await axios.put(`/api/client/modal/${this.props.id}`, client)
+        await axios.put(`${API_ENDPOINT}/api/client/modal/${this.props.id}`, client)
         this.props.updateClient()
     }
 
