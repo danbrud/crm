@@ -36,9 +36,17 @@ const initialState = [
 export const clientsSlice = createSlice({
   name: 'clients',
   initialState,
-  reducers: {}
+  reducers: {
+    clientAdded(state, action) {
+      state.push(action.payload)
+    }
+  }
 })
+
+export const { clientAdded } = clientsSlice.actions
 
 export default clientsSlice.reducer;
 
 export const selectAllClients = state => state.clients
+
+export const selectClientById = (state, cliendId) => state.clients.find(c => c._id === cliendId)

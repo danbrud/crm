@@ -1,37 +1,33 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { API_ENDPOINT } from '../../config';
+import { useDispatch } from 'react-redux'
+import { clientAdded } from '../../state/slices/clientsSlice'
 
-class AddClient extends Component {
+const AddClient = (props) => {
+    const [inputs, setInputs] = useState({ firstName: '', surname: '', email: '', country: '', owner: '' })
 
-    constructor() {
-        super()
-        this.state = {
-            firstName: "",
-            surname: "",
-            email: "",
-            country: "",
-            owner: ""
-        }
-    }
+    const dispatch = useDispatch()
 
-    handleInput = e => this.setState({ [e.target.name]: e.target.value })
+    const handleInput = e => setInputs({ ...inputs, [e.target.name]: e.target.value })
 
-    isStateSet = () => {
+    const isStateSet = () => {
         let isStateSet = true
-        const stateKeys = Object.keys(this.state)
-        stateKeys.forEach(sk => this.state[sk] ? null : isStateSet = false)
+        const stateKeys = Object.keys(inputs)
+        stateKeys.forEach(sk => inputs[sk] ? null : isStateSet = false)
 
         return isStateSet
     }
 
-    saveClient = async (client) => {
-        await axios.post(`${API_ENDPOINT}/client`, client)
+    const saveClient = async (client) => {
+        // await axios.post(`${API_ENDPOINT}/client`, client)
+        // save client
+
     }
 
-    clearInputs = () => this.setState({
+    const clearInputs = () => setInputs({
         firstName: "",
         surname: "",
         email: "",
@@ -39,73 +35,76 @@ class AddClient extends Component {
         owner: ""
     })
 
-    addClient = () => {
-        if (this.isStateSet()) {
+    const addClient = () => {
+        if (isStateSet()) {
             const client = {
-                name: `${this.state.firstName} ${this.state.surname}`,
-                email: this.state.email,
+                name: `${inputs.firstName} ${inputs.surname}`,
+                email: inputs.email,
                 firstContact: new Date(),
-                owner: this.state.owner,
-                country: this.state.country
+                owner: inputs.owner,
+                country: inputs.country
             }
-            this.saveClient(client)
-            this.clearInputs()
-            this.props.showSnackbar("Added")
+            console.log(addClient)
+            // saveClient(client)
+            dispatch(clientAdded(client))
+            clearInputs()
+            props.showSnackbar("Added")
         } else {
-            this.props.showSnackbar("Not added")
+            props.showSnackbar("Not added")
         }
     }
 
-    render() {
-        return (
-            <div id="create-action">
-                <h4>ADD CLIENT</h4>
+    return (
+        <div id="create-action">
+            <h4>ADD CLIENT</h4>
 
-                <div id="input-fields">
+            <div id="input-fields">
 
 
-                    <TextField
-                        className="standard-name"
-                        label="First Name"
-                        name="firstName"
-                        value={this.state.firstName} onChange={this.handleInput}
-                        margin="none"
-                    />
+                <TextField
+                    className="standard-name"
+                    label="First Name"
+                    name="firstName"
+                    value={inputs.firstName} onChange={handleInput}
+                    margin="none"
+                />
 
-                    <TextField
-                        className="standard-name"
-                        label="Surname"
-                        name="surname" value={this.state.surname} onChange={this.handleInput}
-                        margin="none"
-                    />
+                <TextField
+                    className="standard-name"
+                    label="Surname"
+                    name="surname"
+                    value={inputs.surname} onChange={handleInput}
+                    margin="none"
+                />
 
-                    <TextField
-                        className="standard-name"
-                        label="Email"
-                        name="email" value={this.state.email} onChange={this.handleInput}
-                        margin="none"
-                    />
+                <TextField
+                    className="standard-name"
+                    label="Email"
+                    name="email"
+                    value={inputs.email} onChange={handleInput}
+                    margin="none"
+                />
 
-                    <TextField
-                        className="standard-name"
-                        label="Country"
-                        name="country" value={this.state.country} onChange={this.handleInput}
-                        margin="none"
-                    />
+                <TextField
+                    className="standard-name"
+                    label="Country"
+                    name="country"
+                    value={inputs.country} onChange={handleInput}
+                    margin="none"
+                />
 
-                    <TextField
-                        className="standard-name"
-                        label="Owner"
-                        name="owner" value={this.state.owner} onChange={this.handleInput}
-                        margin="none"
-                    />
+                <TextField
+                    className="standard-name"
+                    label="Owner"
+                    name="owner" value={inputs.owner} onChange={handleInput}
+                    margin="none"
+                />
 
-                    <Button id="add-client-btn" onClick={this.addClient} variant="contained" color="primary">Add New Client</Button>
+                <Button id="add-client-btn" onClick={addClient} variant="contained" color="primary">Add New Client</Button>
 
-                </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default AddClient

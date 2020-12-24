@@ -145,6 +145,8 @@ const Clients = () => {
                 id={this.state.modalClient.id}
                 closeModal={this.closeModal}
                 updateClient={this.updateClient} /> : null} */}
+
+                {/* Do something with the route and redux */}
         </div>
     )
 }
