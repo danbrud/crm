@@ -17,19 +17,19 @@ class App extends Component {
 
   changePage = e => this.setState({ pageName: e.target.name })
 
-  isClientSelected = () => this.state.pageName === 'clients' ? true : false
+  isClientSelected = () => this.state.pageName === 'clients'
 
-  isActionSelected = () => this.state.pageName === 'actions' ? true : false
+  isActionSelected = () => this.state.pageName === 'actions'
 
-  isAnalyticSelected = () => this.state.pageName === 'analytics' ? true : false
+  isAnalyticSelected = () => this.state.pageName === 'analytics'
 
   redirectPage = () => this.setState({ pageName: 'clients' })
 
   render() {
 
-    let clientSelectedClass = this.isClientSelected() ? "page-selected" : "page-not-selected"
-    let actionSelectedClass = this.isActionSelected() ? "page-selected" : "page-not-selected"
-    let analyticSelectedClass = this.isAnalyticSelected() ? "page-selected" : "page-not-selected"
+    const clientSelectedClass = this.isClientSelected() ? "page-selected" : "page-not-selected"
+    const actionSelectedClass = this.isActionSelected() ? "page-selected" : "page-not-selected"
+    const analyticSelectedClass = this.isAnalyticSelected() ? "page-selected" : "page-not-selected"
 
 
     return (

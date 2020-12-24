@@ -7,7 +7,7 @@ router.get('/sanity', (req, res) => {
     res.send('OK!')
 })
 
-getClients = async () => Client.find({})
+const getClients = async () => Client.find({})
 
 router.get('/clients', async (req, res) => {
     const clients = await getClients()
@@ -26,18 +26,18 @@ router.post('/client', async (req, res) => {
     res.send(client)
 })
 
-router.put('/client/:id', async (req, res) => {
-    let clientId = req.params.id
-    let propertyToUpdate = req.query.propToUpdate // should change to body
-    let value = req.body.value
+router.put('/client/:clientId', async (req, res) => {
+    const { clientId } = req.params
+    const { propToUpdate } = req.query // should change to body
+    const value = req.body.value
 
-    const client = await Client.findOneAndUpdate({ _id: clientId }, { $set: { [propertyToUpdate]: value } })
+    const client = await Client.findOneAndUpdate({ _id: clientId }, { $set: { [propToUpdate]: value } })
     res.send(client)
 })
 
-router.put('/client/modal/:id', (req, res) => {
-    let clientId = req.params.id
-    let { name, country } = req.body
+router.put('/client/modal/:clientId', (req, res) => {
+    const { clientId } = req.params
+    const { name, country } = req.body
 
     // if(`${reqClient.name} ${reqClient.surname}` === currentClient.name) { delete reqClient.name }
     // if(reqClient.country === currentClient.country) { delete reqClient.country }
@@ -48,5 +48,19 @@ router.put('/client/modal/:id', (req, res) => {
     // Should update only specific keys
 })
 
+router.post('/admin/populate-data', (req, res) => {
+    const data = require('../data')
+
+    const promises = []
+    data.forEach(d => {
+        const client = new Client(d)
+        promises.push(client.save())
+    })
+
+    Promise.all(promises)
+        .then(clients => {
+            res.send({ status: 'success', data: clients })
+        })
+})
 
 module.exports = router

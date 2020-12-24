@@ -31,7 +31,7 @@ class Modal extends Component {
             return
         }
 
-        let client = {
+        const client = {
             name: `${this.state.nameInput} ${this.state.surnameInput}`,
             country: this.state.countryInput
         }

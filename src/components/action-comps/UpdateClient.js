@@ -40,12 +40,12 @@ class UpdateClient extends Component {
     updateClientID = clientIdToUpdate => this.setState({ clientIdToUpdate })
 
     getClients = async () => {
-        let clients = await axios.get(`${API_ENDPOINT}/api/clients/actions`)
+        const clients = await axios.get(`${API_ENDPOINT}/api/clients/actions`)
         return clients.data
     }
 
     componentDidMount = async () => {
-        let clients = await this.getClients()
+        const clients = await this.getClients()
         this.setState({ clients })
     }
 

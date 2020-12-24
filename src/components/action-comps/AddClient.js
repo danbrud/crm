@@ -21,7 +21,7 @@ class AddClient extends Component {
 
     isStateSet = () => {
         let isStateSet = true
-        let stateKeys = Object.keys(this.state)
+        const stateKeys = Object.keys(this.state)
         stateKeys.forEach(sk => this.state[sk] ? null : isStateSet = false)
 
         return isStateSet
@@ -41,7 +41,7 @@ class AddClient extends Component {
 
     addClient = () => {
         if (this.isStateSet()) {
-            let client = {
+            const client = {
                 name: `${this.state.firstName} ${this.state.surname}`,
                 email: this.state.email,
                 firstContact: new Date(),

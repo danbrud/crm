@@ -4,29 +4,29 @@ import '../styles/ClientRow.css'
 class ClientRow extends Component {
 
     getPartOfName = (name, part) => {
-        let i = name.indexOf(" ")
+        const i = name.indexOf(" ")
         return part === "first" ? name.substring(0, i) : name.substring(i + 1)
     }
 
     formatDate = (date) => {
         date = new Date(date)
 
-        let day = date.getDate()
-        let month = date.getMonth() + 1
-        let year = date.getFullYear()
+        const day = date.getDate()
+        const month = date.getMonth() + 1
+        const year = date.getFullYear()
 
         return `${month}/${day}/${year}`
     }
 
     popModal = () => {
-        let name = this.getPartOfName(this.props.client.name, "first")
-        let surname = this.getPartOfName(this.props.client.name, 'surname')
+        const name = this.getPartOfName(this.props.client.name, "first")
+        const surname = this.getPartOfName(this.props.client.name, 'surname')
 
         this.props.popModal(name, surname, this.props.client.country, this.props.client._id)
     }
 
     render() {
-        let client = this.props.client
+        const client = this.props.client
 
         return(
             <div className="client-row" onDoubleClick={this.popModal}>
