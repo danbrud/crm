@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Clients from './components/client-comps/Clients';
@@ -6,47 +6,39 @@ import Actions from './components/action-comps/Actions';
 import Analytics from './components/analytic-comps/Analytics';
 import Home from './components/Home';
 
-class App extends Component {
+const App = () => {
+  const [pageName, setPageName] = useState('')
 
-  constructor() {
-    super()
-    this.state = {
-      pageName: ""
-    }
-  }
+  const changePage = e => setPageName(e.target.name)
 
-  changePage = e => this.setState({ pageName: e.target.name })
+  const isClientSelected = () => pageName === 'clients'
 
-  isClientSelected = () => this.state.pageName === 'clients'
+  const isActionSelected = () => pageName === 'actions'
 
-  isActionSelected = () => this.state.pageName === 'actions'
+  const isAnalyticSelected = () => pageName === 'analytics'
 
-  isAnalyticSelected = () => this.state.pageName === 'analytics'
-
-  redirectPage = () => this.setState({ pageName: 'clients' })
-
-  render() {
-
-    const clientSelectedClass = this.isClientSelected() ? "page-selected" : "page-not-selected"
-    const actionSelectedClass = this.isActionSelected() ? "page-selected" : "page-not-selected"
-    const analyticSelectedClass = this.isAnalyticSelected() ? "page-selected" : "page-not-selected"
+  const redirectPage = () => setPageName('clients')
 
 
-    return (
-      <Router>
-        <div id="navbar">
-          <div className={`${clientSelectedClass} nav-link`}><Link to='/clients' name="clients" onClick={this.changePage}>CLIENTS</Link></div>
-          <div className={`${actionSelectedClass} nav-link`}><Link to='/actions' name="actions" onClick={this.changePage}>ACTIONS</Link></div>
-          <div className={`${analyticSelectedClass} nav-link`}><Link to='/analytics' name="analytics" onClick={this.changePage}>ANALYTICS</Link></div>
-        </div>
+  const clientSelectedClass = isClientSelected() ? 'page-selected' : 'page-not-selected'
+  const actionSelectedClass = isActionSelected() ? 'page-selected' : 'page-not-selected'
+  const analyticSelectedClass = isAnalyticSelected() ? 'page-selected' : 'page-not-selected'
 
-        <Route exact path='/' render={() => <Home redirectPage={this.redirectPage} />} />
-        <Route exact path='/clients' render={() => <Clients />} />
-        <Route exact path='/actions' render={() => <Actions />} />
-        <Route exact path='/analytics' render={() => <Analytics />} />
-      </Router>
-    )
-  }
+
+  return (
+    <Router>
+      <div id="navbar">
+        <div className={`${clientSelectedClass} nav-link`}><Link to='/clients' name="clients" onClick={changePage}>CLIENTS</Link></div>
+        <div className={`${actionSelectedClass} nav-link`}><Link to='/actions' name="actions" onClick={changePage}>ACTIONS</Link></div>
+        <div className={`${analyticSelectedClass} nav-link`}><Link to='/analytics' name="analytics" onClick={changePage}>ANALYTICS</Link></div>
+      </div>
+
+      <Route exact path='/' render={() => <Home redirectPage={redirectPage} />} />
+      <Route exact path='/clients/:clientId?' render={() => <Clients />} />
+      <Route exact path='/actions' render={() => <Actions />} />
+      <Route exact path='/analytics' render={() => <Analytics />} />
+    </Router>
+  )
 }
 
 export default App;

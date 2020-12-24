@@ -7,19 +7,15 @@ import Modal from './Modal';
 import { API_ENDPOINT } from '../../config';
 import { useSelector } from 'react-redux'
 import { selectAllClients } from '../../state/slices/clientsSlice'
+import { useParams } from 'react-router-dom';
 
 const Clients = () => {
+    const { clientId } = useParams()
+
     const clients = useSelector(selectAllClients)
+
     const [filters, setFilters] = useState({ searchFilter: '', selectedFilter: 'name' })
     const [pageNum, setPageNum] = useState(1)
-    // constructor() {
-    //     super()
-    //     this.state = {
-    //
-    //         showModal: false,
-    //         modalClient: {}
-    //     }
-    // }
 
     const handleFilter = e => setFilters({ ...filters, [e.target.name]: e.target.value })
 
@@ -30,38 +26,6 @@ const Clients = () => {
 
     // componentDidMount = async () => {
     // const clients = await this.getClients()
-    // const clients = [
-    //     {
-    //         "_id": "5b9f48a2406b2cd74c55c663",
-    //         "name": "Perkins Cunningham",
-    //         "email": "perkinscunningham@imant.com",
-    //         "firstContact": "2018-11-26T22:00:00.000Z",
-    //         "emailType": "B",
-    //         "sold": true,
-    //         "owner": "Emily Durham",
-    //         "country": "Romania"
-    //     },
-    //     {
-    //         "_id": "5b9f48a25afcc00e1c1ddfbf",
-    //         "name": "Fischer Hammond",
-    //         "email": "fischerhammond@imant.com",
-    //         "firstContact": "2017-05-15T21:00:00.000Z",
-    //         "emailType": null,
-    //         "sold": false,
-    //         "owner": "Janice Alvarado",
-    //         "country": "Turkey"
-    //     },
-    //     {
-    //         "_id": "5b9f48a2717f46c7647d2792",
-    //         "name": "Gonzalez Armstrong",
-    //         "email": "gonzalezarmstrong@imant.com",
-    //         "firstContact": "2018-04-05T21:00:00.000Z",
-    //         "emailType": null,
-    //         "sold": false,
-    //         "owner": "Leila Howe",
-    //         "country": "France"
-    //     }
-    // ]
     // this.setState({ clients })
     // }
 
@@ -111,14 +75,10 @@ const Clients = () => {
         this.setState({ showModal: true, modalClient })
     }
 
-    const closeModal = () => this.setState({ showModal: false, modalClient: {} })
-
     const updateClient = async () => {
         const clients = await this.getClients()
         this.setState({ showModal: false, modalClient: {}, clients })
     }
-
-
 
     return (
         <div id="clients-page">
@@ -135,18 +95,10 @@ const Clients = () => {
             </div>
             <div id="table">
                 <TableHeader />
-                {filterClients().map(c => <ClientRow popModal={popModal} client={c} key={c._id} />)}
+                {filterClients().map(c => <ClientRow client={c} key={c._id} />)}
                 {/* {showCurrentClientNum()} */}
             </div>
-            {/* {this.state.showModal ? <Modal
-                name={this.state.modalClient.name}
-                surname={this.state.modalClient.surname}
-                country={this.state.modalClient.country}
-                id={this.state.modalClient.id}
-                closeModal={this.closeModal}
-                updateClient={this.updateClient} /> : null} */}
-
-                {/* Do something with the route and redux */}
+            {clientId && <Modal clientId={clientId} />}
         </div>
     )
 }
