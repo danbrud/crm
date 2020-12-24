@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
-import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Tooltip } from 'recharts';
 
 class ClientAcquisition extends Component {
 
 
     getDateRange = (start, end) => {
-        let dates = []
-        let startDate = new Date()
+        const dates = []
+        const startDate = new Date()
         startDate.setDate(startDate.getDate() - start)
 
-        let endDate = new Date()
+        const endDate = new Date()
         endDate.setDate(endDate.getDate() - end)
 
         while (startDate < endDate) {
             startDate.setDate(startDate.getDate() + 1)
 
-            let date = new Date(startDate)
+            const date = new Date(startDate)
             dates.push(date)
         }
 
@@ -26,7 +26,7 @@ class ClientAcquisition extends Component {
         let numOfClients = 0
 
         for (let client of this.props.clients) {
-            let contactDate = new Date(client.firstContact)
+            const contactDate = new Date(client.firstContact)
 
             if (contactDate.getMonth() === date.getMonth() && contactDate.getDate() === date.getDate()) {
                 numOfClients++
@@ -37,8 +37,8 @@ class ClientAcquisition extends Component {
     }
 
     getClientsByDate = (periodName, startDate, endDate, color) => {
-        let dates = this.getDateRange(startDate, endDate)
-        let clientsByPeriod = { name: periodName, clients: 0, fill: color }
+        const dates = this.getDateRange(startDate, endDate)
+        const clientsByPeriod = { name: periodName, clients: 0, fill: color }
 
         for (let date of dates) {
             clientsByPeriod.clients += this.getSalesByDate(date)
@@ -48,7 +48,7 @@ class ClientAcquisition extends Component {
     }
 
     getDataForChart = () => {
-        let data = []
+        const data = []
 
         data.push(this.getClientsByDate('Last Month', 30, 0, "#795548"))
         data.push(this.getClientsByDate('1-6 Months', 180, 31, "#34495E"))

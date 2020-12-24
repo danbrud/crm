@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { API_ENDPOINT } from '../../config';
 
 class AddClient extends Component {
 
@@ -20,14 +21,14 @@ class AddClient extends Component {
 
     isStateSet = () => {
         let isStateSet = true
-        let stateKeys = Object.keys(this.state)
+        const stateKeys = Object.keys(this.state)
         stateKeys.forEach(sk => this.state[sk] ? null : isStateSet = false)
 
         return isStateSet
     }
 
     saveClient = async (client) => {
-        await axios.post('/client', client)
+        await axios.post(`${API_ENDPOINT}/client`, client)
     }
 
     clearInputs = () => this.setState({
@@ -40,7 +41,7 @@ class AddClient extends Component {
 
     addClient = () => {
         if (this.isStateSet()) {
-            let client = {
+            const client = {
                 name: `${this.state.firstName} ${this.state.surname}`,
                 email: this.state.email,
                 firstContact: new Date(),

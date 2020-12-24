@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
 class SalesSince extends Component {
 
     getHistoricalDate = daysBack => {
-        let currentDate = new Date()
+        const currentDate = new Date()
         currentDate.setDate(currentDate.getDate() - daysBack)
 
         return currentDate
@@ -13,7 +13,7 @@ class SalesSince extends Component {
     getFullMonth = (date = new Date()) => new Intl.DateTimeFormat('en-US', { month: "short" }).format(date)
 
     getAllDates = () => {
-        let dates = []
+        const dates = []
 
         for (let i = 30; i > 0; i--) {
             dates.push(this.getHistoricalDate(i))
@@ -27,7 +27,7 @@ class SalesSince extends Component {
         const randomMultiplier = Math.floor((Math.random() * 4) + 1) //prettefy the chart data
 
         for (let client of this.props.clients) {
-            let saleDate = new Date(client.firstContact)
+            const saleDate = new Date(client.firstContact)
 
             if (saleDate.getMonth() === date.getMonth() && saleDate.getDate() === date.getDate()) {
                 numOfSales++
@@ -38,11 +38,11 @@ class SalesSince extends Component {
     }
 
     getDataForChart = () => {
-        let dates = this.getAllDates()
-        let salesByDate = []
+        const dates = this.getAllDates()
+        const salesByDate = []
 
         for (let date of dates) {
-            let saleByDate = { date: `${this.getFullMonth(date)} ${date.getDate()}` }
+            const saleByDate = { date: `${this.getFullMonth(date)} ${date.getDate()}` }
             saleByDate.sales = this.getSalesByDate(date)
             salesByDate.push(saleByDate)
         }

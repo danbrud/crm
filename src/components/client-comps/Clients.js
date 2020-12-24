@@ -4,6 +4,7 @@ import axios from 'axios'
 import ClientRow from './ClientRow';
 import '../styles/Clients.css'
 import Modal from './Modal';
+import { API_ENDPOINT } from '../../config';
 
 
 class Clients extends Component {
@@ -23,12 +24,12 @@ class Clients extends Component {
     handleFilter = e => this.setState({ [e.target.name]: e.target.value })
 
     getClients = async () => {
-        let clients = await axios.get('/api/clients')
+        const clients = await axios.get(`${API_ENDPOINT}/api/clients`)
         return clients.data
     }
 
     componentDidMount = async () => {
-        let clients = await this.getClients()
+        const clients = await this.getClients()
         this.setState({ clients })
     }
 
@@ -48,21 +49,21 @@ class Clients extends Component {
     pageUp = () => {
         if (this.state.pageNum * 20 > this.state.clients.length) { return }
 
-        let pageNum = this.state.pageNum + 1
+        const pageNum = this.state.pageNum + 1
         this.setState({ pageNum })
     }
 
     pageDown = () => {
         if (this.state.pageNum === 1) { return }
 
-        let pageNum = this.state.pageNum - 1
+        const pageNum = this.state.pageNum - 1
         this.setState({ pageNum })
     }
 
     showCurrentClientNum = () => {
 
-        let topNum = this.state.pageNum * 20
-        let lowNum = topNum - 19
+        const topNum = this.state.pageNum * 20
+        const lowNum = topNum - 19
 
         return (
             <div id="paging">
@@ -74,15 +75,15 @@ class Clients extends Component {
     }
 
     popModal = (name, surname, country, id) => {
-        let modalClient = {name, surname, country, id}
-        this.setState({showModal: true, modalClient})
+        const modalClient = { name, surname, country, id }
+        this.setState({ showModal: true, modalClient })
     }
 
-    closeModal = () => this.setState({showModal: false, modalClient: {}})
+    closeModal = () => this.setState({ showModal: false, modalClient: {} })
 
     updateClient = async () => {
-        let clients = await this.getClients()
-        this.setState({showModal: false, modalClient: {}, clients})
+        const clients = await this.getClients()
+        this.setState({ showModal: false, modalClient: {}, clients })
     }
 
     render() {
@@ -105,13 +106,13 @@ class Clients extends Component {
                     {this.filterClients().map(c => <ClientRow popModal={this.popModal} client={c} key={c._id} />)}
                     {this.showCurrentClientNum()}
                 </div>
-                {this.state.showModal ? <Modal 
-                                name={this.state.modalClient.name} 
-                                surname={this.state.modalClient.surname} 
-                                country={this.state.modalClient.country}
-                                id={this.state.modalClient.id}
-                                closeModal={this.closeModal}
-                                updateClient={this.updateClient} /> : null}
+                {this.state.showModal ? <Modal
+                    name={this.state.modalClient.name}
+                    surname={this.state.modalClient.surname}
+                    country={this.state.modalClient.country}
+                    id={this.state.modalClient.id}
+                    closeModal={this.closeModal}
+                    updateClient={this.updateClient} /> : null}
             </div>
         )
     }

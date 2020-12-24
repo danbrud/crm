@@ -23,10 +23,10 @@ class Badges extends Component {
     getNumOutstandingClients = clients => clients.filter(c => !c.sold).length
 
     getHottestCountry = clients => {
-        let clientsPerCountry = {}
+        const clientsPerCountry = {}
         clients.forEach(c => clientsPerCountry[c.country] ? clientsPerCountry[c.country]++ : clientsPerCountry[c.country] = 1)
-    
-        let countries = Object.keys(clientsPerCountry)
+
+        const countries = Object.keys(clientsPerCountry)
         let maxClients = 0
         let hottestCountry = ""
 
@@ -41,7 +41,7 @@ class Badges extends Component {
     }
 
     createBadgeElements = clients => {
-        let badgeElements = {
+        const badgeElements = {
             newClients: {
                 data: this.getNumNewClients(clients),
                 icon: 'fas fa-chart-line',
@@ -72,8 +72,8 @@ class Badges extends Component {
     }
 
     render() {
-        let badgeElements = this.createBadgeElements(this.props.clients)
-        let badgeCategories = Object.keys(badgeElements)
+        const badgeElements = this.createBadgeElements(this.props.clients)
+        const badgeCategories = Object.keys(badgeElements)
 
         if(this.props.clients.length && this.state.isLoading) { this.setState({isLoading: false}) }
 

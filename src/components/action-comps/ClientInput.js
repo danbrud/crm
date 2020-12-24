@@ -14,7 +14,7 @@ class ClientInput extends Component {
     createDataListOptions = () => this.props.clients.map(c => <option key={c._id} value={c.name} />)
 
     updateClientID = () => {
-        let client = this.props.clients.find(c => c.name === this.state.selectedName)
+        const client = this.props.clients.find(c => c.name === this.state.selectedName)
         if(client) { this.props.updateClientID(client._id) }
     }
 

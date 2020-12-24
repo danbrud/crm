@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { ComposedChart, ResponsiveContainer, CartesianAxis, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts'
+import { ComposedChart, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts'
 
 class TopEmployees extends Component {
 
     createOwnerClientObj = clients => {
-        let employeeSales = {}
+        const employeeSales = {}
 
         clients.forEach(c => {
             if (c.sold) {
@@ -16,8 +16,8 @@ class TopEmployees extends Component {
     }
 
     createDataArray = (employeeSales) => {
-        let dataArr = []
-        let employees = Object.keys(employeeSales)
+        const dataArr = []
+        const employees = Object.keys(employeeSales)
 
         employees.forEach(e => {
             dataArr.push({ name: e, sales: employeeSales[e] })
@@ -27,8 +27,8 @@ class TopEmployees extends Component {
     }
 
     generateTopEmployees = clients => {
-        let numOfEmployees = 3
-        let employeeSales = this.createOwnerClientObj(clients)
+        const numOfEmployees = 3
+        const employeeSales = this.createOwnerClientObj(clients)
 
         let dataForChart = this.createDataArray(employeeSales)
 
@@ -40,7 +40,7 @@ class TopEmployees extends Component {
 
     render() {
 
-        let dataForChart = this.generateTopEmployees(this.props.clients)
+        const dataForChart = this.generateTopEmployees(this.props.clients)
 
         return (
             <div id="top-emp" className="chart">

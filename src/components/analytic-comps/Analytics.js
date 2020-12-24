@@ -3,6 +3,7 @@ import Badges from './Badges'
 import axios from 'axios'
 import Charts from './Charts';
 import '../styles/Analytics.css'
+import { API_ENDPOINT } from '../../config';
 
 class Analytics extends Component {
 
@@ -16,12 +17,12 @@ class Analytics extends Component {
 
 
     getClients = async () => {
-        let clients = await axios.get('/api/clients')
+        const clients = await axios.get(`${API_ENDPOINT}/api/clients`)
         return clients.data
     }
 
     componentDidMount = async () => {
-        let clients = await this.getClients()
+        const clients = await this.getClients()
         this.setState({ clients, isLoading: false })
     }
 

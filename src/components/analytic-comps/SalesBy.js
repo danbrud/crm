@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer } from 'recharts'
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts'
 
 
 class SalesBy extends Component {
@@ -35,13 +35,13 @@ class SalesBy extends Component {
     }
 
     createDataObject = (clients, selection) => {
-        let dataObj = {}
+        const dataObj = {}
 
         for (let client of clients) {
 
             if (client.sold) {
                 if (selection === "firstContact") {
-                    let date = this.getFullMonth(new Date(client[selection]))
+                    const date = this.getFullMonth(new Date(client[selection]))
                     dataObj[date] ? dataObj[date]++ : dataObj[date] = 1
                 } else {
                     dataObj[client[selection]] ? dataObj[client[selection]]++ : dataObj[client[selection]] = 1
@@ -54,9 +54,9 @@ class SalesBy extends Component {
 
     generateSalesByDataPoint = (clients, selection) => {
 
-        let dataObj = this.createDataObject(clients, selection)
-        let dataArr = []
-        let dataKeys = selection === "firstContact" ? this.sortMonths(Object.keys(dataObj)) : Object.keys(dataObj)
+        const dataObj = this.createDataObject(clients, selection)
+        const dataArr = []
+        const dataKeys = selection === "firstContact" ? this.sortMonths(Object.keys(dataObj)) : Object.keys(dataObj)
 
         for (let item of dataKeys) {
             dataArr.push({ name: item.split(" ")[0], sales: dataObj[item] })
