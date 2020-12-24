@@ -32,7 +32,6 @@ const Clients = () => {
     const currentClients = () => clients.slice((pageNum * 20) - 20, pageNum * 20)
 
     const filterClients = () => {
-
         if (filters.selectedFilter !== "sold") {
             return currentClients()
                 .filter(c => c[filters.selectedFilter].toLowerCase()
@@ -42,37 +41,33 @@ const Clients = () => {
         }
     }
 
-    const pageUp = () => {
-        if (this.state.pageNum * 20 > this.state.clients.length) { return }
-
-        const pageNum = this.state.pageNum + 1
-        this.setState({ pageNum })
+    const isInBounds = (direction) => {
+        if (direction === 'next') {
+            return pageNum * 20 <= clients.length
+        } else {
+            return pageNum !== 1
+        }
     }
 
-    const pageDown = () => {
-        if (this.state.pageNum === 1) { return }
-
-        const pageNum = this.state.pageNum - 1
-        this.setState({ pageNum })
+    const changePage = (direction) => () => {
+        if (isInBounds(direction)) {
+            const updatedPageNumber = direction === 'next' ? pageNum + 1 : pageNum - 1
+            setPageNum(updatedPageNumber)
+        }
     }
 
     const showCurrentClientNum = () => {
 
-        const topNum = this.state.pageNum * 20
+        const topNum = pageNum * 20
         const lowNum = topNum - 19
 
         return (
             <div id="paging">
-                <i className="fas fa-chevron-left" onClick={this.pageDown}></i>
-                <p>{lowNum} - {this.state.pageNum * 20 > this.state.clients.length && this.state.clients.length ? 'END' : topNum}</p>
-                <i className="fas fa-chevron-right" onClick={this.pageUp}></i>
+                <i className="fas fa-chevron-left" onClick={changePage('next')}></i>
+                <p>{lowNum} - {pageNum * 20 > clients.length && clients.length ? 'END' : topNum}</p>
+                <i className="fas fa-chevron-right" onClick={changePage('previous')}></i>
             </div>
         )
-    }
-
-    const popModal = (name, surname, country, id) => {
-        const modalClient = { name, surname, country, id }
-        this.setState({ showModal: true, modalClient })
     }
 
     const updateClient = async () => {
@@ -96,7 +91,7 @@ const Clients = () => {
             <div id="table">
                 <TableHeader />
                 {filterClients().map(c => <ClientRow client={c} key={c._id} />)}
-                {/* {showCurrentClientNum()} */}
+                {showCurrentClientNum()}
             </div>
             {clientId && <Modal clientId={clientId} />}
         </div>
