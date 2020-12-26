@@ -2,11 +2,17 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const clientSchema = new Schema({
-    name: String,
+    firstName: String,
+    surname: String,
     email: String,
-    firstContact: Date,
-    emailType: String,
-    sold: Boolean,
+    firstContact: {
+        type: Date,
+        default: function () {
+            return new Date()
+        }
+    },
+    emailType: { type: String, default: null },
+    sold: { type: Boolean, default: false },
     owner: String,
     country: String
 })

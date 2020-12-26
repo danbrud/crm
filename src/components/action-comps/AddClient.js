@@ -24,16 +24,7 @@ const AddClient = (props) => {
 
     const addClient = async () => {
         if (isInputsValid()) {
-            const client = {
-                name: `${inputs.firstName} ${inputs.surname}`,
-                email: inputs.email,
-                firstContact: new Date(),
-                owner: inputs.owner,
-                country: inputs.country
-            }
-            // When adding surname, change this above
-
-            const resultAction = await dispatch(addNewClient(client))
+            const resultAction = await dispatch(addNewClient(inputs))
             unwrapResult(resultAction)
 
             clearInputs()

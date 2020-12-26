@@ -21,7 +21,7 @@ router.get('/clients/actions', async (req, res) => {
 })
 
 router.post('/clients', async (req, res) => {
-    const client = new Client({ ...req.body, emailType: null, sold: false })
+    const client = new Client(req.body)
     await client.save()
     res.send(client)
 })
@@ -48,19 +48,19 @@ router.put('/client/modal/:clientId', (req, res) => {
     // Should update only specific keys
 })
 
-router.post('/admin/populate-data', (req, res) => {
-    const data = require('../data')
+router.post('/admin/populate-data', async (req, res) => {
+    await Client.deleteMany({})
 
+    const data = require('../data')
     const promises = []
     data.forEach(d => {
-        const client = new Client(d)
+        const [firstName, surname] = d.name.split(' ')
+        const client = new Client({ ...d, firstName, surname })
         promises.push(client.save())
     })
 
-    Promise.all(promises)
-        .then(clients => {
-            res.send({ status: 'success', data: clients })
-        })
+    const clients = await Promise.all(promises)
+    res.send({ status: 'success', data: clients })
 })
 
 module.exports = router

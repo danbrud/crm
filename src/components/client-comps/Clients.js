@@ -31,12 +31,14 @@ const Clients = () => {
     const currentClients = () => clients.slice((pageNum * 20) - 20, pageNum * 20)
 
     const filterClients = () => {
-        if (filters.selectedFilter !== "sold") {
-            return currentClients()
-                .filter(c => c[filters.selectedFilter].toLowerCase()
-                    .includes(filters.searchFilter.toLowerCase()))
-        } else {
+        const searchTerm = filters.searchFilter.toLowerCase()
+
+        if (filters.selectedFilter === 'name') {
+            return currentClients().filter(c => c.firstName.toLowerCase().includes(searchTerm) || c.surname.toLowerCase().includes(searchTerm))
+        } else if (filters.selectedFilter === 'sold') {
             return currentClients().filter(c => c.sold)
+        } else {
+            return currentClients().filter(c => (c[filters.selectedFilter].toLowerCase().includes(searchTerm)))
         }
     }
 

@@ -1,24 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import Moment from 'react-moment'
 import '../styles/ClientRow.css'
 
 const ClientRow = ({ client, popModal }) => {
     const history = useHistory()
-
-    const getPartOfName = (name, part) => {
-        const i = name.indexOf(" ")
-        return part === "first" ? name.substring(0, i) : name.substring(i + 1)
-    }
-
-    const formatDate = (date) => {
-        date = new Date(date)
-
-        const day = date.getDate()
-        const month = date.getMonth() + 1
-        const year = date.getFullYear()
-
-        return `${month}/${day}/${year}`
-    }
 
     const showModal = () => {
         history.push(`/clients/${client._id}`)
@@ -26,13 +12,13 @@ const ClientRow = ({ client, popModal }) => {
 
     return (
         <div className="client-row" onDoubleClick={showModal}>
-            <div className="row-item">{getPartOfName(client.name, 'first')}</div>
-            <div className="row-item">{getPartOfName(client.name, 'surname')}</div>
-            <div className="row-item">{client.country}</div>
-            <div className="row-item">{formatDate(client.firstContact)}</div>
-            <div className="row-item">{client.emailType ? client.emailType : '.'}</div>
-            <div className="row-item">{client.sold ? <i className="fas fa-check"></i> : '-'}</div>
-            <div className="row-item">{client.owner}</div>
+            <p className="row-item">{client.firstName}</p>
+            <p className="row-item">{client.surname}</p>
+            <p className="row-item">{client.country}</p>
+            <p className="row-item"><Moment format='MM/DD/YYYY'>{client.firstContact}</Moment></p>
+            <p className="row-item">{client.emailType ? client.emailType : '.'}</p>
+            <p className="row-item">{client.sold ? <i className='fas fa-check'></i> : '-'}</p>
+            <p className="row-item">{client.owner}</p>
         </div>
     )
 }

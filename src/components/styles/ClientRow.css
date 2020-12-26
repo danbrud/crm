@@ -14,3 +14,7 @@
     display: grid;
     justify-self: start;
 }
+
+p.row-item {
+    margin: 0;
+}
