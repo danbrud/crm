@@ -1,33 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TableHeader from './TableHeader';
-import axios from 'axios'
 import ClientRow from './ClientRow';
 import '../styles/Clients.css'
 import Modal from './Modal';
-import { API_ENDPOINT } from '../../config';
-import { useSelector } from 'react-redux'
-import { selectAllClients } from '../../state/slices/clientsSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectAllClients, fetchClients, selectClientStatus } from '../../state/slices/clientsSlice'
 import { useParams } from 'react-router-dom';
+import { CLIENT_STATUSES } from '../../state/clientStatuses';
+import Loader from '../Loader';
 
 const Clients = () => {
     const { clientId } = useParams()
 
+    const dispatch = useDispatch()
     const clients = useSelector(selectAllClients)
+    const clientStatus = useSelector(selectClientStatus)
 
     const [filters, setFilters] = useState({ searchFilter: '', selectedFilter: 'name' })
     const [pageNum, setPageNum] = useState(1)
 
+    console.log(CLIENT_STATUSES)//add this to if statement
+    useEffect(() => {
+        if (clientStatus === 'idle') {
+            dispatch(fetchClients())
+        }
+    }, [clientStatus, dispatch]) //Come back and learn why I need to add this
+
     const handleFilter = e => setFilters({ ...filters, [e.target.name]: e.target.value })
-
-    const getClients = async () => {
-        const clients = await axios.get(`${API_ENDPOINT}/api/clients`)
-        return clients.data
-    }
-
-    // componentDidMount = async () => {
-    // const clients = await this.getClients()
-    // this.setState({ clients })
-    // }
 
     const currentClients = () => clients.slice((pageNum * 20) - 20, pageNum * 20)
 
@@ -63,9 +62,9 @@ const Clients = () => {
 
         return (
             <div id="paging">
-                <i className="fas fa-chevron-left" onClick={changePage('next')}></i>
+                <i className="fas fa-chevron-left" onClick={changePage('previous')}></i>
                 <p>{lowNum} - {pageNum * 20 > clients.length && clients.length ? 'END' : topNum}</p>
-                <i className="fas fa-chevron-right" onClick={changePage('previous')}></i>
+                <i className="fas fa-chevron-right" onClick={changePage('next')}></i>
             </div>
         )
     }
@@ -90,8 +89,14 @@ const Clients = () => {
             </div>
             <div id="table">
                 <TableHeader />
-                {filterClients().map(c => <ClientRow client={c} key={c._id} />)}
-                {showCurrentClientNum()}
+                {
+                    clientStatus === CLIENT_STATUSES.succeeded
+                        ? <>
+                            {filterClients().map(c => <ClientRow client={c} key={c._id} />)}
+                            {showCurrentClientNum()}
+                        </>
+                        : <Loader />
+                }
             </div>
             {clientId && <Modal clientId={clientId} />}
         </div>

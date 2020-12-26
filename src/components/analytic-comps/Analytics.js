@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import Badges from './Badges'
 import axios from 'axios'
 import Charts from './Charts';
-import '../styles/Analytics.css'
+import '../styles/Loader.css'
 import { API_ENDPOINT } from '../../config';
+import Loader from '../Loader';
 
 class Analytics extends Component {
 
@@ -26,30 +27,18 @@ class Analytics extends Component {
         this.setState({ clients, isLoading: false })
     }
 
-    showLoader = () => {
-        return (
-            <div className="spinner">
-                <div className="bounce1"></div>
-                <div className="bounce2"></div>
-                <div className="bounce3"></div>
-            </div>
-        )
-    }
-
-    showData = () => {
-        return (
-            <div>
-                <Badges clients={this.state.clients} />
-                <Charts clients={this.state.clients} />
-            </div>
-        )
-    }
-
     render() {
 
         return (
             <div>
-                {this.state.isLoading ? this.showLoader() : this.showData()}
+                {
+                    this.state.isLoading
+                        ? <Loader />
+                        : <div>
+                            <Badges clients={this.state.clients} />
+                            <Charts clients={this.state.clients} />
+                        </div>
+                }
             </div>
         )
     }
