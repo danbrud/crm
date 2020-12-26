@@ -12,34 +12,15 @@ const AddClient = (props) => {
 
     const handleInput = e => setInputs({ ...inputs, [e.target.name]: e.target.value })
 
-
-
-    const saveClient = async (client) => {
-        // await axios.post(`${API_ENDPOINT}/client`, client)
-        // save client
-
-    }
-
     const clearInputs = () => setInputs({
-        firstName: "",
-        surname: "",
-        email: "",
-        country: "",
-        owner: ""
+        firstName: '',
+        surname: '',
+        email: '',
+        country: '',
+        owner: ''
     })
 
-    const isStateSet = () => {
-        let isStateSet = true
-        const stateKeys = Object.keys(inputs)
-        stateKeys.forEach(sk => inputs[sk] ? null : isStateSet = false)
-
-        return isStateSet
-    }
-
-    const isInputsValid = () => {
-        const { firstName, surname, email, country, owner } = inputs
-        return [firstName, surname, email, country, owner].every(Boolean)
-    }
+    const isInputsValid = () => Object.keys(inputs).every(key => !!inputs[key])
 
     const addClient = async () => {
         if (isInputsValid()) {

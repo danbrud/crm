@@ -1,6 +1,4 @@
 import React, { Component, useState } from 'react'
-import axios from 'axios';
-import { API_ENDPOINT } from '../../config';
 import { useSelector, useDispatch } from 'react-redux'
 import { selectClientById, clientUpdatedInModal } from '../../state/slices/clientsSlice';
 import { useHistory } from 'react-router-dom';
@@ -15,9 +13,7 @@ const Modal = ({ clientId }) => {
 
     const handleInput = e => setInputs({ ...inputs, [e.target.name]: e.target.value })
 
-    const userChangedInput = () => {
-        return !(inputs.name === client.name && inputs.surname === client.surname && inputs.country === client.country)
-    }
+    const userChangedInput = () => !Object.keys(inputs).every(key => inputs[key] === client[key])
 
     const updateClient = async () => {
         if (!userChangedInput()) {
@@ -31,9 +27,6 @@ const Modal = ({ clientId }) => {
         }
         dispatch(clientUpdatedInModal({ ...client, clientId }))
         closeModal()
-
-        // await axios.put(`${API_ENDPOINT}/api/client/modal/${this.props.id}`, client)
-        // this.props.updateClient()
     }
 
     const closeModal = () => history.push('/clients')

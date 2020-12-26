@@ -69,11 +69,6 @@ const Clients = () => {
         )
     }
 
-    const updateClient = async () => {
-        const clients = await this.getClients()
-        this.setState({ showModal: false, modalClient: {}, clients })
-    }
-
     return (
         <div id="clients-page">
             <div id="search-container">
