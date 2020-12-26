@@ -5,7 +5,11 @@ export const apiClient = {
   getClients: () => {
     return axios.get(`${API_ENDPOINT}/clients`)
   },
-  addNewClient: (client) => {
+  addNewClient: client => {
     return axios.post(`${API_ENDPOINT}/clients`, client)
+  },
+  updateClientByModal: (valuesToUpdate) => {
+    const { clientId, firstName, surname, country } = valuesToUpdate
+    return axios.put(`${API_ENDPOINT}/clients/modal/${clientId}`, { firstName, surname, country })
   }
 }

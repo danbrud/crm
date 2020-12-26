@@ -35,17 +35,16 @@ router.put('/client/:clientId', async (req, res) => {
     res.send(client)
 })
 
-router.put('/client/modal/:clientId', (req, res) => {
+router.put('/clients/modal/:clientId', async (req, res) => {
     const { clientId } = req.params
-    const { name, country } = req.body
+    const { firstName, surname, country } = req.body
 
     // if(`${reqClient.name} ${reqClient.surname}` === currentClient.name) { delete reqClient.name }
     // if(reqClient.country === currentClient.country) { delete reqClient.country }
-
-    Client.findOneAndUpdate({ _id: clientId }, { $set: { name, country } }, function (err, client) {
-        res.send(`Updated client ${clientId}`)
-    })
     // Should update only specific keys
+
+    const client = await Client.findOneAndUpdate({ _id: clientId }, { $set: { firstName, surname, country } }, { new: true })
+    res.send(client)
 })
 
 router.post('/admin/populate-data', async (req, res) => {

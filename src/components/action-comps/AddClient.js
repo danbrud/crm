@@ -12,13 +12,7 @@ const AddClient = (props) => {
 
     const handleInput = e => setInputs({ ...inputs, [e.target.name]: e.target.value })
 
-    const clearInputs = () => setInputs({
-        firstName: '',
-        surname: '',
-        email: '',
-        country: '',
-        owner: ''
-    })
+    const clearInputs = () => setInputs({ firstName: '', surname: '', email: '', country: '', owner: '' })
 
     const isInputsValid = () => Object.keys(inputs).every(key => !!inputs[key])
 

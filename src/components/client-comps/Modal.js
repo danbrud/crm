@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectClientById, clientUpdatedInModal } from '../../state/slices/clientsSlice';
+import { selectClientById, updateClientByModal } from '../../state/slices/clientsSlice';
+import { unwrapResult } from '@reduxjs/toolkit'
 import { Redirect, useHistory } from 'react-router-dom';
 
 const Modal = ({ clientId }) => {
@@ -21,7 +22,8 @@ const Modal = ({ clientId }) => {
             return
         }
 
-        dispatch(clientUpdatedInModal({ ...client, clientId }))
+        const resultAction = await dispatch(updateClientByModal({ ...inputs, clientId }))
+        unwrapResult(resultAction)
         closeModal()
     }
 

@@ -7,8 +7,13 @@ export const fetchClients = createAsyncThunk('clients/fetchClients', async () =>
   return response.data
 })
 
-export const addNewClient = createAsyncThunk('/clients/addNewClient', async client => {
+export const addNewClient = createAsyncThunk('clients/addNewClient', async client => {
   const response = await apiClient.addNewClient(client)
+  return response.data
+})
+
+export const updateClientByModal = createAsyncThunk('clients/updateClientByModal', async valuesToUpdate => {
+  const response = await apiClient.updateClientByModal(valuesToUpdate)
   return response.data
 })
 
@@ -21,15 +26,7 @@ const initialState = {
 export const clientsSlice = createSlice({
   name: 'clients',
   initialState,
-  reducers: {
-    clientUpdatedInModal(state, action) {
-      const { clientId, name, country } = action.payload
-
-      const client = state.data.find(client => client._id === clientId)
-      client.name = name
-      client.country = country
-    }
-  },
+  reducers: {},
   extraReducers: {
     [fetchClients.pending]: (state, action) => {
       state.status = CLIENT_STATUSES.pending
@@ -44,6 +41,15 @@ export const clientsSlice = createSlice({
     },
     [addNewClient.fulfilled]: (state, action) => {
       state.data.push(action.payload)
+    },
+    [updateClientByModal.fulfilled]: (state, action) => {
+      const { _id: clientId, firstName, surname, country } = action.payload
+
+      const client = state.data.find(client => client._id === clientId)
+      client.firstName = firstName
+      client.surname = surname
+      client.country = country
+      // Should update only specific keys
     }
   }
 })
