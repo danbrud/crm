@@ -3,13 +3,6 @@ import Badge from './Badge';
 
 class Badges extends Component {
 
-    constructor() {
-        super()
-        this.state = {
-            isLoading: true
-        }
-    }
-
     getMonthName = (date = new Date()) => new Intl.DateTimeFormat('en-US', {month: "long"}).format(date)
 
     getNumNewClients = clients => {
@@ -75,11 +68,9 @@ class Badges extends Component {
         const badgeElements = this.createBadgeElements(this.props.clients)
         const badgeCategories = Object.keys(badgeElements)
 
-        if(this.props.clients.length && this.state.isLoading) { this.setState({isLoading: false}) }
-
         return (
             <div id="badges-container">
-                {this.state.isLoading ? "show loader" : badgeCategories.map(bc => <Badge key={bc} badgeCategory={badgeElements[bc]} />)}
+                {badgeCategories.map(bc => <Badge key={bc} badgeCategory={badgeElements[bc]} />)}
             </div>
         )
     }

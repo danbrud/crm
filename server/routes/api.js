@@ -7,16 +7,8 @@ router.get('/sanity', (req, res) => {
     res.send('OK!')
 })
 
-const getClients = async () => Client.find({})
-
 router.get('/clients', async (req, res) => {
-    const clients = await getClients()
-    res.send(clients)
-})
-
-router.get('/clients/actions', async (req, res) => {
-    let clients = await getClients()
-    clients = clients.map(c => ({ _id: c._id, name: c.name, owner: c.owner }))
+    const clients = await Client.find({})
     res.send(clients)
 })
 
