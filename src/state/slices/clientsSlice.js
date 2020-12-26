@@ -12,8 +12,8 @@ export const addNewClient = createAsyncThunk('clients/addNewClient', async clien
   return response.data
 })
 
-export const updateClientByModal = createAsyncThunk('clients/updateClientByModal', async valuesToUpdate => {
-  const response = await apiClient.updateClientByModal(valuesToUpdate)
+export const updateClient = createAsyncThunk('clients/updateClient', async valuesToUpdate => {
+  const response = await apiClient.updateClient(valuesToUpdate)
   return response.data
 })
 
@@ -42,25 +42,21 @@ export const clientsSlice = createSlice({
     [addNewClient.fulfilled]: (state, action) => {
       state.data.push(action.payload)
     },
-    [updateClientByModal.fulfilled]: (state, action) => {
-      const { _id: clientId, firstName, surname, country } = action.payload
+    [updateClient.fulfilled]: (state, action) => {
+      const { _id: clientId } = action.payload
 
-      const client = state.data.find(client => client._id === clientId)
-      client.firstName = firstName
-      client.surname = surname
-      client.country = country
-      // Should update only specific keys
+      const clientIndex = state.data.findIndex(client => client._id === clientId)
+      state.data[clientIndex] = action.payload
     }
   }
 })
-
-export const { clientAdded, clientUpdatedInModal } = clientsSlice.actions
-
 
 export default clientsSlice.reducer;
 
 export const selectAllClients = state => state.clients.data
 
 export const selectClientById = (state, clientId) => state.clients.data.find(client => client._id === clientId)
+
+export const selectClientsForDataList = state => state.clients.data.map(client => ({ _id: client._id, name: `${client.firstName} ${client.surname}`, owner: client.owner }))
 
 export const selectClientStatus = state => state.clients.status

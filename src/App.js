@@ -1,13 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Clients from './components/client-comps/Clients';
 import Actions from './components/action-comps/Actions';
 import Analytics from './components/analytic-comps/Analytics';
 import Home from './components/Home';
+import { fetchClients, selectClientStatus } from './state/slices/clientsSlice'
+import { useSelector, useDispatch } from 'react-redux'
+
+
 
 const App = () => {
   const [pageName, setPageName] = useState('')
+
+  const dispatch = useDispatch()
+  const clientStatus = useSelector(selectClientStatus)
+
+  useEffect(() => {
+    if (clientStatus === 'idle') {
+      //add CLIENT_STATUSES in condition
+      dispatch(fetchClients())
+    }
+  }, [clientStatus, dispatch]) //Come back and learn why I need to add this
 
   const changePage = e => setPageName(e.target.name)
 

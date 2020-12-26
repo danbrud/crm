@@ -8,8 +8,10 @@ export const apiClient = {
   addNewClient: client => {
     return axios.post(`${API_ENDPOINT}/clients`, client)
   },
-  updateClientByModal: (valuesToUpdate) => {
-    const { clientId, firstName, surname, country } = valuesToUpdate
-    return axios.put(`${API_ENDPOINT}/clients/modal/${clientId}`, { firstName, surname, country })
+  updateClient: (valuesToUpdate) => {
+    const { clientId, payload, isModal } = valuesToUpdate
+    return isModal
+      ? axios.put(`${API_ENDPOINT}/clients/modal/${clientId}`, payload)
+      : axios.put(`${API_ENDPOINT}/clients/${clientId}`, payload)
   }
 }

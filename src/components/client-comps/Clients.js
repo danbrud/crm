@@ -3,8 +3,8 @@ import TableHeader from './TableHeader';
 import ClientRow from './ClientRow';
 import '../styles/Clients.css'
 import Modal from './Modal';
-import { useSelector, useDispatch } from 'react-redux'
-import { selectAllClients, fetchClients, selectClientStatus } from '../../state/slices/clientsSlice'
+import { useSelector } from 'react-redux'
+import { selectAllClients, selectClientStatus } from '../../state/slices/clientsSlice'
 import { useParams } from 'react-router-dom';
 import { CLIENT_STATUSES } from '../../state/clientStatuses';
 import Loader from '../Loader';
@@ -12,19 +12,11 @@ import Loader from '../Loader';
 const Clients = () => {
     const { clientId } = useParams()
 
-    const dispatch = useDispatch()
     const clients = useSelector(selectAllClients)
     const clientStatus = useSelector(selectClientStatus)
 
     const [filters, setFilters] = useState({ searchFilter: '', selectedFilter: 'name' })
     const [pageNum, setPageNum] = useState(1)
-
-    useEffect(() => {
-        if (clientStatus === 'idle') {
-            //add CLIENT_STATUSES in condition
-            dispatch(fetchClients())
-        }
-    }, [clientStatus, dispatch]) //Come back and learn why I need to add this
 
     const handleFilter = e => setFilters({ ...filters, [e.target.name]: e.target.value })
 

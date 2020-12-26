@@ -26,12 +26,11 @@ router.post('/clients', async (req, res) => {
     res.send(client)
 })
 
-router.put('/client/:clientId', async (req, res) => {
+router.put('/clients/:clientId', async (req, res) => {
     const { clientId } = req.params
-    const { propToUpdate } = req.query // should change to body
-    const value = req.body.value
+    const { property, value } = req.body // should change to body
 
-    const client = await Client.findOneAndUpdate({ _id: clientId }, { $set: { [propToUpdate]: value } })
+    const client = await Client.findOneAndUpdate({ _id: clientId }, { $set: { [property]: value } }, { new: true })
     res.send(client)
 })
 
