@@ -19,9 +19,9 @@ const Clients = () => {
     const [filters, setFilters] = useState({ searchFilter: '', selectedFilter: 'name' })
     const [pageNum, setPageNum] = useState(1)
 
-    console.log(CLIENT_STATUSES)//add this to if statement
     useEffect(() => {
         if (clientStatus === 'idle') {
+            //add CLIENT_STATUSES in condition
             dispatch(fetchClients())
         }
     }, [clientStatus, dispatch]) //Come back and learn why I need to add this

@@ -20,7 +20,7 @@ router.get('/clients/actions', async (req, res) => {
     res.send(clients)
 })
 
-router.post('/client', async (req, res) => {
+router.post('/clients', async (req, res) => {
     const client = new Client({ ...req.body, emailType: null, sold: false })
     await client.save()
     res.send(client)

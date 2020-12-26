@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { API_ENDPOINT } from '../../config';
 import { useDispatch } from 'react-redux'
-import { clientAdded } from '../../state/slices/clientsSlice'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { addNewClient } from '../../state/slices/clientsSlice'
 
 const AddClient = (props) => {
     const [inputs, setInputs] = useState({ firstName: '', surname: '', email: '', country: '', owner: '' })
@@ -13,13 +12,7 @@ const AddClient = (props) => {
 
     const handleInput = e => setInputs({ ...inputs, [e.target.name]: e.target.value })
 
-    const isStateSet = () => {
-        let isStateSet = true
-        const stateKeys = Object.keys(inputs)
-        stateKeys.forEach(sk => inputs[sk] ? null : isStateSet = false)
 
-        return isStateSet
-    }
 
     const saveClient = async (client) => {
         // await axios.post(`${API_ENDPOINT}/client`, client)
@@ -35,8 +28,21 @@ const AddClient = (props) => {
         owner: ""
     })
 
-    const addClient = () => {
-        if (isStateSet()) {
+    const isStateSet = () => {
+        let isStateSet = true
+        const stateKeys = Object.keys(inputs)
+        stateKeys.forEach(sk => inputs[sk] ? null : isStateSet = false)
+
+        return isStateSet
+    }
+
+    const isInputsValid = () => {
+        const { firstName, surname, email, country, owner } = inputs
+        return [firstName, surname, email, country, owner].every(Boolean)
+    }
+
+    const addClient = async () => {
+        if (isInputsValid()) {
             const client = {
                 name: `${inputs.firstName} ${inputs.surname}`,
                 email: inputs.email,
@@ -44,9 +50,11 @@ const AddClient = (props) => {
                 owner: inputs.owner,
                 country: inputs.country
             }
-            console.log(addClient)
-            // saveClient(client)
-            dispatch(clientAdded(client))
+            // When adding surname, change this above
+
+            const resultAction = await dispatch(addNewClient(client))
+            unwrapResult(resultAction)
+
             clearInputs()
             props.showSnackbar("Added")
         } else {
@@ -57,10 +65,7 @@ const AddClient = (props) => {
     return (
         <div id="create-action">
             <h4>ADD CLIENT</h4>
-
             <div id="input-fields">
-
-
                 <TextField
                     className="standard-name"
                     label="First Name"
@@ -68,7 +73,6 @@ const AddClient = (props) => {
                     value={inputs.firstName} onChange={handleInput}
                     margin="none"
                 />
-
                 <TextField
                     className="standard-name"
                     label="Surname"
@@ -76,7 +80,6 @@ const AddClient = (props) => {
                     value={inputs.surname} onChange={handleInput}
                     margin="none"
                 />
-
                 <TextField
                     className="standard-name"
                     label="Email"
@@ -84,7 +87,6 @@ const AddClient = (props) => {
                     value={inputs.email} onChange={handleInput}
                     margin="none"
                 />
-
                 <TextField
                     className="standard-name"
                     label="Country"
@@ -92,16 +94,15 @@ const AddClient = (props) => {
                     value={inputs.country} onChange={handleInput}
                     margin="none"
                 />
-
                 <TextField
                     className="standard-name"
                     label="Owner"
                     name="owner" value={inputs.owner} onChange={handleInput}
                     margin="none"
                 />
-
-                <Button id="add-client-btn" onClick={addClient} variant="contained" color="primary">Add New Client</Button>
-
+                <Button id="add-client-btn" onClick={addClient} variant="contained" color="primary">
+                    Add New Client
+                </Button>
             </div>
         </div>
     )

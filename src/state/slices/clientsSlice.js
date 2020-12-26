@@ -1,9 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { client } from '../../api/client'
+import { apiClient } from '../../api/apiClient'
 import { CLIENT_STATUSES } from '../clientStatuses'
 
 export const fetchClients = createAsyncThunk('clients/fetchClients', async () => {
-  const response = await client.getClients()
+  const response = await apiClient.getClients()
+  return response.data
+})
+
+export const addNewClient = createAsyncThunk('/clients/addNewClient', async client => {
+  const response = await apiClient.addNewClient(client)
   return response.data
 })
 
@@ -17,9 +22,6 @@ export const clientsSlice = createSlice({
   name: 'clients',
   initialState,
   reducers: {
-    clientAdded(state, action) {
-      state.data.push(action.payload)
-    },
     clientUpdatedInModal(state, action) {
       const { clientId, name, country } = action.payload
 
@@ -39,6 +41,9 @@ export const clientsSlice = createSlice({
     [fetchClients.rejected]: (state, action) => {
       state.status = CLIENT_STATUSES.failed
       state.error = action.error.message
+    },
+    [addNewClient.fulfilled]: (state, action) => {
+      state.data.push(action.payload)
     }
   }
 })
