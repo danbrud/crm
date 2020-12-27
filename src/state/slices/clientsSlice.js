@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiClient } from '../../api/apiClient'
 import { CLIENT_STATUSES } from '../clientStatuses'
+import { createBadges } from '../createBadges'
 
 export const fetchClients = createAsyncThunk('clients/fetchClients', async () => {
   const response = await apiClient.getClients()
@@ -60,3 +61,5 @@ export const selectClientById = (state, clientId) => state.clients.data.find(cli
 export const selectClientsForDataList = state => state.clients.data.map(client => ({ _id: client._id, name: `${client.firstName} ${client.surname}`, owner: client.owner }))
 
 export const selectClientStatus = state => state.clients.status
+
+export const selectBadges = state => createBadges(state.clients.data)

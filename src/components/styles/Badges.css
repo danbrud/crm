@@ -20,7 +20,7 @@
 
 .badge-container {
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
         "b v"
         "b s";
 }
@@ -39,6 +39,7 @@
     display: grid;
     justify-self: start;
     align-self: center;
+    margin: 0;
 }
 
 .badge-sentence {
@@ -46,5 +47,6 @@
     display: grid;
     justify-self: start;
     align-self: center;
+    margin: 0;
 }
 
