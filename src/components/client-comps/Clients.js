@@ -8,6 +8,7 @@ import { selectAllClients, selectClientStatus } from '../../state/slices/clients
 import { useParams } from 'react-router-dom';
 import { CLIENT_STATUSES } from '../../state/clientStatuses';
 import Loader from '../Loader';
+import PaginationBar from './PaginationBar';
 
 const Clients = () => {
     const { clientId } = useParams()
@@ -49,20 +50,6 @@ const Clients = () => {
         }
     }
 
-    const showCurrentClientNum = () => {
-
-        const topNum = pageNum * 20
-        const lowNum = topNum - 19
-
-        return (
-            <div id="paging">
-                <i className="fas fa-chevron-left" onClick={changePage('previous')}></i>
-                <p>{lowNum} - {pageNum * 20 > clients.length && clients.length ? 'END' : topNum}</p>
-                <i className="fas fa-chevron-right" onClick={changePage('next')}></i>
-            </div>
-        )
-    }
-
     return (
         <div id="clients-page">
             <div id="search-container">
@@ -82,7 +69,7 @@ const Clients = () => {
                     clientStatus === CLIENT_STATUSES.succeeded
                         ? <>
                             {filterClients().map(c => <ClientRow client={c} key={c._id} />)}
-                            {showCurrentClientNum()}
+                            <PaginationBar changePage={changePage} pageNum={pageNum} totalClients={clients.length}/>
                         </>
                         : <Loader />
                 }
