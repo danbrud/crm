@@ -1,9 +1,9 @@
-#first-two {
+#top {
     display: grid;
     grid-template-columns: 1fr 2fr;
 }
 
-#second-two {
+#bottom {
     display: grid;
     grid-template-columns: 3fr 1fr;
 }

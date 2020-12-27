@@ -15,8 +15,8 @@ const Analytics = () => {
             {
                 clientStatus === CLIENT_STATUSES.succeeded
                     ? <div>
-                        <Badges clients={clients} />
-                        <Charts clients={clients} />
+                        <Badges />
+                        <Charts />
                     </div>
                     : <Loader />
             }
