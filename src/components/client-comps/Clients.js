@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import TableHeader from './TableHeader';
 import ClientRow from './ClientRow';
 import '../styles/Clients.css'
@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import { CLIENT_STATUSES } from '../../CONSTS';
 import Loader from '../Loader';
 import PaginationBar from './PaginationBar';
+import { toProperCase } from '../../utils';
 
 const Clients = () => {
     const { clientId } = useParams()
@@ -50,17 +51,13 @@ const Clients = () => {
         }
     }
 
+    const filterOptions = ['name', 'email', 'sold', 'owner', 'country']
     return (
         <div id="clients-page">
             <div id="search-container">
-
                 <input type="text" name="searchFilter" placeholder="Search" value={filters.searchFilter} onChange={handleFilter} id="search-clients-input" />
                 <select id="select-filter" name="selectedFilter" value={filters.selectedFilter} onChange={handleFilter}>
-                    <option value="name">Name</option>
-                    <option value="email">Email</option>
-                    <option value="sold">Sold</option>
-                    <option value="owner">Owner</option>
-                    <option value="country">Country</option>
+                    {filterOptions.map(filter => <option value={filter}>{toProperCase(filter)}</option>)}
                 </select>
             </div>
             <div id="table">

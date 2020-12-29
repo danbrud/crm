@@ -15,7 +15,7 @@ const Charts = () => {
             </div>
             <div id="bottom">
                 <SalesSince />
-                <ClientAcquisition />
+                {/* <ClientAcquisition /> */}
             </div>
         </div>
     )

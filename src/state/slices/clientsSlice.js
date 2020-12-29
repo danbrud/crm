@@ -3,6 +3,7 @@ import { apiClient } from '../../api/apiClient'
 import { CLIENT_STATUSES } from '../../CONSTS'
 import { generateBadges } from '../helpers/generateBadges'
 import { generateSalesByChart } from '../helpers/generateSalesByChart'
+import { generateSalesSinceChart } from '../helpers/generateSalesSinceChart'
 import { generateTopEmployeeChart } from '../helpers/generateTopEmployeeChart'
 
 export const fetchClients = createAsyncThunk('clients/fetchClients', async () => {
@@ -69,4 +70,6 @@ export const selectBadges = state => generateBadges(state.clients.data)
 export const selectTopEmployeeChart = state => generateTopEmployeeChart(state.clients.data)
 
 export const selectSalesByChart = (state, salesBySelection) => generateSalesByChart(state.clients.data, salesBySelection)
+
+export const selectSalesSinceChart = state => generateSalesSinceChart(state.clients.data)
 

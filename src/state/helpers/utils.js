@@ -1,1 +1,0 @@
-export const getMonthName = (type, date = new Date()) => new Intl.DateTimeFormat('en-US', { month: type }).format(date)

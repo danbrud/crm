@@ -1,5 +1,5 @@
 import { MONTHS_TO_NUMBERS } from "../../CONSTS"
-import { getMonthName } from "./utils"
+import { getMonthName } from "../../utils"
 
 const sortMonths = monthsArr => monthsArr.sort((a, b) => MONTHS_TO_NUMBERS[a] - MONTHS_TO_NUMBERS[b])
 
