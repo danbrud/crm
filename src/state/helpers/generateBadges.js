@@ -1,4 +1,5 @@
-const getMonthName = (date = new Date()) => new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date)
+import { getMonthName } from "./utils"
+
 
 const getNumNewClients = clients => {
   const currentMonth = new Date().getMonth()
@@ -43,12 +44,12 @@ const getHottestCountry = clients => {
   return hottestCountry
 }
 
-export const createBadges = clients => {
+export const generateBadges = clients => {
   return {
     newClients: {
       data: getNumNewClients(clients),
       icon: 'fas fa-chart-line',
-      sentence: `New ${getMonthName()} Clients`,
+      sentence: `New ${getMonthName('long')} Clients`,
       color: '#2ECC71'
     },
     emailsSent: {

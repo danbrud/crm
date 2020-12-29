@@ -6,7 +6,7 @@ import Modal from './Modal';
 import { useSelector } from 'react-redux'
 import { selectAllClients, selectClientStatus } from '../../state/slices/clientsSlice'
 import { useParams } from 'react-router-dom';
-import { CLIENT_STATUSES } from '../../state/clientStatuses';
+import { CLIENT_STATUSES } from '../../CONSTS';
 import Loader from '../Loader';
 import PaginationBar from './PaginationBar';
 

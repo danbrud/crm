@@ -23,7 +23,7 @@ const generateChartData = (ownersBySales) => {
   return chartData
 }
 
-export const createTopEmployeeChart = clients => {
+export const generateTopEmployeeChart = clients => {
   const numOwnersToDisplay = 3
   const ownersBySales = getOwnerBySales(clients)
 

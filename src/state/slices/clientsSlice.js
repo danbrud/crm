@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiClient } from '../../api/apiClient'
-import { CLIENT_STATUSES } from '../clientStatuses'
-import { createBadges } from '../createBadges'
-import { createTopEmployeeChart } from '../createTopEmployeeChart'
+import { CLIENT_STATUSES } from '../../CONSTS'
+import { generateBadges } from '../helpers/generateBadges'
+import { generateSalesByChart } from '../helpers/generateSalesByChart'
+import { generateTopEmployeeChart } from '../helpers/generateTopEmployeeChart'
 
 export const fetchClients = createAsyncThunk('clients/fetchClients', async () => {
   const response = await apiClient.getClients()
@@ -63,6 +64,9 @@ export const selectClientsForDataList = state => state.clients.data.map(client =
 
 export const selectClientStatus = state => state.clients.status
 
-export const selectBadges = state => createBadges(state.clients.data)
+export const selectBadges = state => generateBadges(state.clients.data)
 
-export const selectTopEmployeeChart = state => createTopEmployeeChart(state.clients.data)
+export const selectTopEmployeeChart = state => generateTopEmployeeChart(state.clients.data)
+
+export const selectSalesByChart = (state, salesBySelection) => generateSalesByChart(state.clients.data, salesBySelection)
+

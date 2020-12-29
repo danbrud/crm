@@ -13,57 +13,7 @@ class SalesBy extends Component {
 
     handleSelection = e => this.setState({ selection: e.target.value })
 
-    getFullMonth = date => new Intl.DateTimeFormat('en-US', { month: "short" }).format(date)
 
-    sortMonths = monthsArr => {
-        const monthsOrder = {
-            "Jan": 1,
-            "Feb": 2,
-            "Mar": 3,
-            "Apr": 4,
-            "May": 5,
-            "Jun": 6,
-            "Jul": 7,
-            "Aug": 8,
-            "Sep": 9,
-            "Oct": 10,
-            "Nov": 11,
-            "Dec": 12
-        }
-
-        return monthsArr.sort((a, b) => monthsOrder[a] - monthsOrder[b])
-    }
-
-    createDataObject = (clients, selection) => {
-        const dataObj = {}
-
-        for (let client of clients) {
-
-            if (client.sold) {
-                if (selection === "firstContact") {
-                    const date = this.getFullMonth(new Date(client[selection]))
-                    dataObj[date] ? dataObj[date]++ : dataObj[date] = 1
-                } else {
-                    dataObj[client[selection]] ? dataObj[client[selection]]++ : dataObj[client[selection]] = 1
-                }
-            }
-        }
-
-        return dataObj
-    }
-
-    generateSalesByDataPoint = (clients, selection) => {
-
-        const dataObj = this.createDataObject(clients, selection)
-        const dataArr = []
-        const dataKeys = selection === "firstContact" ? this.sortMonths(Object.keys(dataObj)) : Object.keys(dataObj)
-
-        for (let item of dataKeys) {
-            dataArr.push({ name: item.split(" ")[0], sales: dataObj[item] })
-        }
-
-        return dataArr
-    }
 
     getChartDataBySelection = () => {
         if (this.state.selection === "country") {

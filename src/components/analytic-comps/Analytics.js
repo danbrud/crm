@@ -3,11 +3,10 @@ import Badges from './Badges'
 import Charts from './Charts';
 import Loader from '../Loader';
 import { useSelector } from 'react-redux'
-import { selectAllClients, selectClientStatus } from '../../state/slices/clientsSlice'
-import { CLIENT_STATUSES } from '../../state/clientStatuses';
+import { selectClientStatus } from '../../state/slices/clientsSlice'
+import { CLIENT_STATUSES } from '../../CONSTS';
 
 const Analytics = () => {
-    const clients = useSelector(selectAllClients)
     const clientStatus = useSelector(selectClientStatus)
 
     return (
