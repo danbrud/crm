@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiClient } from '../../api/apiClient'
 import { CLIENT_STATUSES } from '../../CONSTS'
 import { generateBadges } from '../helpers/generateBadges'
+import { generateClientAquisitionChart } from '../helpers/generateClientAquisitionChart'
 import { generateSalesByChart } from '../helpers/generateSalesByChart'
 import { generateSalesSinceChart } from '../helpers/generateSalesSinceChart'
 import { generateTopEmployeeChart } from '../helpers/generateTopEmployeeChart'
@@ -72,4 +73,6 @@ export const selectTopEmployeeChart = state => generateTopEmployeeChart(state.cl
 export const selectSalesByChart = (state, salesBySelection) => generateSalesByChart(state.clients.data, salesBySelection)
 
 export const selectSalesSinceChart = state => generateSalesSinceChart(state.clients.data)
+
+export const selectClientAquisitionChart = state => generateClientAquisitionChart(state.clients.data)
 

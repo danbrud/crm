@@ -1,4 +1,4 @@
-import { getHistoricalDate, getMonthName } from '../../utils'
+import { getHistoricalDate, getMonthName, getSalesByDate } from '../../utils'
 
 const getThirtyPreviousDates = () => {
   const dates = []
@@ -7,16 +7,6 @@ const getThirtyPreviousDates = () => {
   }
 
   return dates
-}
-
-const getSalesByDate = (clients, date) => {
-  const numOfSales = clients.reduce((accumulatedSales, currentClient) => {
-    const saleDate = new Date(currentClient.firstContact)
-    return (saleDate.getMonth() === date.getMonth() && saleDate.getDate() === date.getDate()) ? accumulatedSales + 1 : accumulatedSales
-  }, 0)
-
-  const randomMultiplier = Math.floor((Math.random() * 4) + 1) //prettify the chart data
-  return numOfSales * randomMultiplier
 }
 
 export const generateSalesSinceChart = clients => {
