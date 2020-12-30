@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_ENDPOINT } from '../config'
+import { API_ENDPOINT } from '../CONSTS'
 
 export const apiClient = {
   getClients: () => {

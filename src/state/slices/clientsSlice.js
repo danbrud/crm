@@ -64,6 +64,8 @@ export const selectClientById = (state, clientId) => state.clients.data.find(cli
 
 export const selectClientsForDataList = state => state.clients.data.map(client => ({ _id: client._id, name: `${client.firstName} ${client.surname}`, owner: client.owner }))
 
+export const selectAvailableOwners = state => [...new Set(state.clients.data.map(client => client.owner))]
+
 export const selectClientStatus = state => state.clients.status
 
 export const selectBadges = state => generateBadges(state.clients.data)

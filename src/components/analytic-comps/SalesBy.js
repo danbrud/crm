@@ -17,7 +17,7 @@ const SalesBy = () => {
         <div id="sales-by" className="chart">
             <h5>Sales By:</h5>
             <select id="sales-by-selection" value={selection} onChange={handleSelection}>
-                {selectionOptions.map(selection => <option value={selection}>{toProperCase(selection)}</option>)}
+                {selectionOptions.map((selection, i) => <option key={i} value={selection}>{toProperCase(selection)}</option>)}
             </select>
             <BarChart width={700} height={250} data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />

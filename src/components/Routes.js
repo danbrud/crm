@@ -15,7 +15,7 @@ const Routes = () => {
 
   return (
     <>
-      {routeData.map(route => <Route exact path={route.path} render={() => route.component} />)}
+      {routeData.map((route, i) => <Route key={i} exact path={route.path} render={() => route.component} />)}
     </>
   )
 }

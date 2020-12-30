@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { PieChart, Pie, Tooltip } from 'recharts';
 import { useSelector } from 'react-redux'
 import { selectClientAquisitionChart } from '../../state/slices/clientsSlice';

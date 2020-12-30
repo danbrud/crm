@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import './App.css';
 import { fetchClients, selectClientStatus } from './state/slices/clientsSlice'
 import { useSelector, useDispatch } from 'react-redux'
-import NavBar from './NavBar';
+import NavBar from './components/NavBar';
 import Routes from './components/Routes';
 
 

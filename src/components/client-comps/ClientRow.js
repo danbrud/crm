@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import Moment from 'react-moment'
-import '../styles/ClientRow.css'
+import '../../styles/ClientRow.css'
 
 const ClientRow = ({ client }) => {
     const history = useHistory()

@@ -1,34 +1,37 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { selectClientsForDataList } from '../../state/slices/clientsSlice'
 
-class ClientInput extends Component {
+const ClientInput = ({ updateClientID }) => {
+    const clients = useSelector(selectClientsForDataList)
 
-    constructor(){
-        super()
-        this.state = {
-            selectedName: ""
+    const [selectedName, setSelectedName] = useState('')
+
+    useEffect(() => {
+        const client = clients.find(client => client.name === selectedName)
+        if (client) {
+            updateClientID(client._id)
         }
-    }
+    }, [selectedName, updateClientID, clients])
 
-    updateName = e => this.setState({selectedName: e.target.value}, function() { this.updateClientID() })
+    const updateName = e => setSelectedName(e.target.value)
 
-    createDataListOptions = () => this.props.clients.map(c => <option key={c._id} value={c.name} />)
-
-    updateClientID = () => {
-        const client = this.props.clients.find(c => c.name === this.state.selectedName)
-        if(client) { this.props.updateClientID(client._id) }
-    }
-
-    render() {
-        return (
-            <div>
-                <span>Client: </span>
-                <input type="text" id="update-client-input" placeholder="Client Name" list="clients" value={this.state.selectedName} onInput={this.updateName}/>
-                <datalist id="clients">
-                    {this.createDataListOptions()}
-                </datalist>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <span>Client: </span>
+            <input
+                type="text"
+                id="update-client-input"
+                placeholder="Client Name"
+                list="clients"
+                value={selectedName}
+                onChange={updateName}
+            />
+            <datalist id="clients">
+                {clients.map(c => <option key={c._id} value={c.name} />)}
+            </datalist>
+        </div>
+    )
 }
 
 export default ClientInput

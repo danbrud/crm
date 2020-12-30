@@ -3,7 +3,7 @@ import TopEmployees from './TopEmployees';
 import SalesBy from './SalesBy';
 import SalesSince from './SalesSince';
 import ClientAcquisition from './ClientAcquisition';
-import '../styles/Charts.css'
+import '../../styles/Charts.css'
 
 const Charts = () => {
 

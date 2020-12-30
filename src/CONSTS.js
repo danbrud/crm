@@ -1,3 +1,5 @@
+export const API_ENDPOINT = process.env ? `http://localhost:${process.env.REACT_APP_API_PORT}/api` : ''
+
 export const CLIENT_STATUSES = {
   idle: 'idle',
   pending: 'pending',
@@ -18,4 +20,11 @@ export const MONTHS_TO_NUMBERS = {
   Oct: 10,
   Nov: 11,
   Dec: 12
+}
+
+export const SNACKBAR_MESSAGES = {
+  added: 'Client added!',
+  notAdded: 'Enter all fields & try again',
+  updated: 'Client updated!',
+  notUpdated: 'Make sure to select an option & try again'
 }

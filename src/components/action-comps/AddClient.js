@@ -4,11 +4,13 @@ import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { addNewClient } from '../../state/slices/clientsSlice'
+import { toProperCase } from '../../utils';
+import { SNACKBAR_MESSAGES } from '../../CONSTS';
 
-const AddClient = (props) => {
-    const [inputs, setInputs] = useState({ firstName: '', surname: '', email: '', country: '', owner: '' })
-
+const AddClient = ({ showSnackbar }) => {
     const dispatch = useDispatch()
+
+    const [inputs, setInputs] = useState({ firstName: '', surname: '', email: '', country: '', owner: '' })
 
     const handleInput = e => setInputs({ ...inputs, [e.target.name]: e.target.value })
 
@@ -22,50 +24,42 @@ const AddClient = (props) => {
             unwrapResult(resultAction)
 
             clearInputs()
-            props.showSnackbar("Added")
+            showSnackbar(SNACKBAR_MESSAGES.added)
         } else {
-            props.showSnackbar("Not added")
+            showSnackbar(SNACKBAR_MESSAGES.notAdded)
         }
     }
 
+    const splitFieldWithUpperCaseAndProperCase = field => {
+        let upperCaseOccurences = field.match(/[A-Z]/g)
+        if (upperCaseOccurences) {
+            upperCaseOccurences = upperCaseOccurences.map(letter => field.indexOf(letter))
+            upperCaseOccurences.forEach(index => {
+                field = field.split('')
+                field.splice(index, 0, ' ')
+                field = field.join('')
+            })
+        }
+
+        return field.split(' ').map(word => toProperCase(word)).join(' ')
+    }
+
+    const inputFields = ['firstName', 'surname', 'email', 'country', 'owner']
     return (
         <div id="create-action">
             <h4>ADD CLIENT</h4>
             <div id="input-fields">
-                <TextField
-                    className="standard-name"
-                    label="First Name"
-                    name="firstName"
-                    value={inputs.firstName} onChange={handleInput}
-                    margin="none"
-                />
-                <TextField
-                    className="standard-name"
-                    label="Surname"
-                    name="surname"
-                    value={inputs.surname} onChange={handleInput}
-                    margin="none"
-                />
-                <TextField
-                    className="standard-name"
-                    label="Email"
-                    name="email"
-                    value={inputs.email} onChange={handleInput}
-                    margin="none"
-                />
-                <TextField
-                    className="standard-name"
-                    label="Country"
-                    name="country"
-                    value={inputs.country} onChange={handleInput}
-                    margin="none"
-                />
-                <TextField
-                    className="standard-name"
-                    label="Owner"
-                    name="owner" value={inputs.owner} onChange={handleInput}
-                    margin="none"
-                />
+                {inputFields.map((field, i) => (
+                    <TextField
+                        key={i}
+                        className="standard-name"
+                        label={splitFieldWithUpperCaseAndProperCase(field)}
+                        name={field}
+                        value={inputs[field]}
+                        onChange={handleInput}
+                        margin="none"
+                    />
+                ))}
                 <Button id="add-client-btn" onClick={addClient} variant="contained" color="primary">
                     Add New Client
                 </Button>

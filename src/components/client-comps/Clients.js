@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TableHeader from './TableHeader';
 import ClientRow from './ClientRow';
-import '../styles/Clients.css'
+import '../../styles/Clients.css'
 import Modal from './Modal';
 import { useSelector } from 'react-redux'
 import { selectAllClients, selectClientStatus } from '../../state/slices/clientsSlice'
@@ -57,7 +57,7 @@ const Clients = () => {
             <div id="search-container">
                 <input type="text" name="searchFilter" placeholder="Search" value={filters.searchFilter} onChange={handleFilter} id="search-clients-input" />
                 <select id="select-filter" name="selectedFilter" value={filters.selectedFilter} onChange={handleFilter}>
-                    {filterOptions.map(filter => <option value={filter}>{toProperCase(filter)}</option>)}
+                    {filterOptions.map((filter, i) => <option key={i} value={filter}>{toProperCase(filter)}</option>)}
                 </select>
             </div>
             <div id="table">

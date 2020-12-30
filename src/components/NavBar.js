@@ -9,8 +9,8 @@ const NavBar = () => {
   const navItems = ['clients', 'actions', 'analytics']
   return (
     <div id="navbar">
-      {navItems.map(navItem => (
-        <div className={`page${isNavItemSelected(location.pathname, navItem) ? '-selected' : '-not-selected'} nav-link`}>
+      {navItems.map((navItem, i) => (
+        <div key={i} className={`page${isNavItemSelected(location.pathname, navItem) ? '-selected' : '-not-selected'} nav-link`}>
           <Link to={`/${navItem}`} name={navItem}>{navItem.toUpperCase()}</Link>
         </div>
       ))}
