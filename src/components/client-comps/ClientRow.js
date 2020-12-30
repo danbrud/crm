@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import Moment from 'react-moment'
 import '../styles/ClientRow.css'
 
-const ClientRow = ({ client, popModal }) => {
+const ClientRow = ({ client }) => {
     const history = useHistory()
 
     const showModal = () => {

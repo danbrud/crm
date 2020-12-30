@@ -1,6 +1,6 @@
 import React from 'react'
 
-function PaginationBar({ pageNum, changePage, totalClients }) {
+const PaginationBar = ({ pageNum, changePage, totalClients }) => {
   const topNum = pageNum * 20
   const lowNum = topNum - 19
 

@@ -1,21 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { toProperCase } from '../../utils'
 import '../styles/TableHeader.css'
 
-class TableHeader extends Component {
+const TableHeader = () => {
+    const headerItems = ['name', 'surname', 'country', 'first contact', 'email', 'sold', 'owner']
 
-    render() {
-        return(
-            <div id="table-header">
-                <div className="header-item">Name</div>
-                <div className="header-item">Surname</div>
-                <div className="header-item">Country</div>
-                <div className="header-item">First Contact</div>
-                <div className="header-item">Email</div>
-                <div className="header-item">Sold</div>
-                <div className="header-item">Owner</div>
-            </div>
-        )
-    }
+    return (
+        <div id="table-header">
+            {headerItems.map(headerItem => <p className="header-item">{headerItem.toUpperCase()}</p>)}
+        </div>
+    )
 }
 
 export default TableHeader
