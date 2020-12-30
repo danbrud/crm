@@ -1,88 +1,16 @@
-import React, { Component } from 'react'
-import Badge from './Badge';
+import React from 'react'
+import Badge from './Badge'
+import { useSelector } from 'react-redux'
+import { selectBadges } from '../../state/slices/clientsSlice'
 
-class Badges extends Component {
+const Badges = () => {
+    const badgeData = useSelector(selectBadges)
 
-    constructor() {
-        super()
-        this.state = {
-            isLoading: true
-        }
-    }
-
-    getMonthName = (date = new Date()) => new Intl.DateTimeFormat('en-US', {month: "long"}).format(date)
-
-    getNumNewClients = clients => {
-        const currentMonth = new Date().getMonth()
-
-        return clients.filter(c => (new Date(c.firstContact).getMonth()) === currentMonth).length
-    }
-
-    getNumEmailsSent = clients => clients.filter(c => c.emailType).length
-
-    getNumOutstandingClients = clients => clients.filter(c => !c.sold).length
-
-    getHottestCountry = clients => {
-        const clientsPerCountry = {}
-        clients.forEach(c => clientsPerCountry[c.country] ? clientsPerCountry[c.country]++ : clientsPerCountry[c.country] = 1)
-
-        const countries = Object.keys(clientsPerCountry)
-        let maxClients = 0
-        let hottestCountry = ""
-
-        countries.forEach(c => {
-            if(clientsPerCountry[c] > maxClients){
-                maxClients = clientsPerCountry[c]
-                hottestCountry = c
-            }
-        })
-
-        return hottestCountry
-    }
-
-    createBadgeElements = clients => {
-        const badgeElements = {
-            newClients: {
-                data: this.getNumNewClients(clients),
-                icon: 'fas fa-chart-line',
-                sentence: `New ${this.getMonthName()} Clients`,
-                color: '#2ECC71'
-            },
-            emailsSent: {
-                data: this.getNumEmailsSent(clients),
-                icon: 'fas fa-envelope',
-                sentence: "Emails Sent",
-                color: '#3498DB'
-            },
-            outstandingClients: {
-                data: this.getNumOutstandingClients(clients),
-                icon: 'fas fa-users',
-                sentence: "Outstanding Clients",
-                color: '#E74C3C'
-            },
-            hottestCountry: {
-                data: this.getHottestCountry(clients),
-                icon: 'fas fa-globe-americas',
-                sentence: "Hottest Country",
-                color: '#F1C40F'
-            }
-        }
-
-        return badgeElements
-    }
-
-    render() {
-        const badgeElements = this.createBadgeElements(this.props.clients)
-        const badgeCategories = Object.keys(badgeElements)
-
-        if(this.props.clients.length && this.state.isLoading) { this.setState({isLoading: false}) }
-
-        return (
-            <div id="badges-container">
-                {this.state.isLoading ? "show loader" : badgeCategories.map(bc => <Badge key={bc} badgeCategory={badgeElements[bc]} />)}
-            </div>
-        )
-    }
+    return (
+        <div id="badges-container">
+            {Object.keys(badgeData).map((badgeName, i) => <Badge key={i} badge={badgeData[badgeName]} />)}
+        </div>
+    )
 }
 
 export default Badges

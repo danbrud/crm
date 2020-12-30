@@ -1,121 +1,79 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import TableHeader from './TableHeader';
-import axios from 'axios'
 import ClientRow from './ClientRow';
-import '../styles/Clients.css'
+import '../../styles/Clients.css'
 import Modal from './Modal';
-import { API_ENDPOINT } from '../../config';
+import { useSelector } from 'react-redux'
+import { selectAllClients, selectClientStatus } from '../../state/slices/clientsSlice'
+import { useParams } from 'react-router-dom';
+import { CLIENT_STATUSES } from '../../CONSTS';
+import Loader from '../Loader';
+import PaginationBar from './PaginationBar';
+import { toProperCase } from '../../utils';
 
+const Clients = () => {
+    const { clientId } = useParams()
 
-class Clients extends Component {
+    const clients = useSelector(selectAllClients)
+    const clientStatus = useSelector(selectClientStatus)
 
-    constructor() {
-        super()
-        this.state = {
-            clients: [],
-            searchFilter: "",
-            selectedFilter: "name",
-            pageNum: 1,
-            showModal: false,
-            modalClient: {}
-        }
-    }
+    const [filters, setFilters] = useState({ searchFilter: '', selectedFilter: 'name' })
+    const [pageNum, setPageNum] = useState(1)
 
-    handleFilter = e => this.setState({ [e.target.name]: e.target.value })
+    const handleFilter = e => setFilters({ ...filters, [e.target.name]: e.target.value })
 
-    getClients = async () => {
-        const clients = await axios.get(`${API_ENDPOINT}/api/clients`)
-        return clients.data
-    }
+    const currentClients = () => clients.slice((pageNum * 20) - 20, pageNum * 20)
 
-    componentDidMount = async () => {
-        const clients = await this.getClients()
-        this.setState({ clients })
-    }
+    const filterClients = () => {
+        const searchTerm = filters.searchFilter.toLowerCase()
 
-    currentClients = () => this.state.clients.slice((this.state.pageNum * 20) - 20, this.state.pageNum * 20)
-
-    filterClients = () => {
-
-        if (this.state.selectedFilter !== "sold") {
-            return this.currentClients()
-                .filter(c => c[this.state.selectedFilter].toLowerCase()
-                    .includes(this.state.searchFilter.toLowerCase()))
+        if (filters.selectedFilter === 'name') {
+            return currentClients().filter(c => c.firstName.toLowerCase().includes(searchTerm) || c.surname.toLowerCase().includes(searchTerm))
+        } else if (filters.selectedFilter === 'sold') {
+            return currentClients().filter(c => c.sold)
         } else {
-            return this.currentClients().filter(c => c.sold)
+            return currentClients().filter(c => (c[filters.selectedFilter].toLowerCase().includes(searchTerm)))
         }
     }
 
-    pageUp = () => {
-        if (this.state.pageNum * 20 > this.state.clients.length) { return }
-
-        const pageNum = this.state.pageNum + 1
-        this.setState({ pageNum })
+    const isInBounds = (direction) => {
+        if (direction === 'next') {
+            return pageNum * 20 <= clients.length
+        } else {
+            return pageNum !== 1
+        }
     }
 
-    pageDown = () => {
-        if (this.state.pageNum === 1) { return }
-
-        const pageNum = this.state.pageNum - 1
-        this.setState({ pageNum })
+    const changePage = (direction) => () => {
+        if (isInBounds(direction)) {
+            const updatedPageNumber = direction === 'next' ? pageNum + 1 : pageNum - 1
+            setPageNum(updatedPageNumber)
+        }
     }
 
-    showCurrentClientNum = () => {
-
-        const topNum = this.state.pageNum * 20
-        const lowNum = topNum - 19
-
-        return (
-            <div id="paging">
-                <i className="fas fa-chevron-left" onClick={this.pageDown}></i>
-                <p>{lowNum} - {this.state.pageNum * 20 > this.state.clients.length && this.state.clients.length ? 'END' : topNum}</p>
-                <i className="fas fa-chevron-right" onClick={this.pageUp}></i>
+    const filterOptions = ['name', 'email', 'sold', 'owner', 'country']
+    return (
+        <div id="clients-page">
+            <div id="search-container">
+                <input type="text" name="searchFilter" placeholder="Search" value={filters.searchFilter} onChange={handleFilter} id="search-clients-input" />
+                <select id="select-filter" name="selectedFilter" value={filters.selectedFilter} onChange={handleFilter}>
+                    {filterOptions.map((filter, i) => <option key={i} value={filter}>{toProperCase(filter)}</option>)}
+                </select>
             </div>
-        )
-    }
-
-    popModal = (name, surname, country, id) => {
-        const modalClient = { name, surname, country, id }
-        this.setState({ showModal: true, modalClient })
-    }
-
-    closeModal = () => this.setState({ showModal: false, modalClient: {} })
-
-    updateClient = async () => {
-        const clients = await this.getClients()
-        this.setState({ showModal: false, modalClient: {}, clients })
-    }
-
-    render() {
-
-        return (
-            <div id="clients-page">
-                <div id="search-container">
-
-                    <input type="text" name="searchFilter" placeholder="Search" value={this.state.search} onChange={this.handleFilter} id="search-clients-input" />
-                    <select id="select-filter" name="selectedFilter" value={this.state.selectedFilter} onChange={this.handleFilter}>
-                        <option value="name">Name</option>
-                        <option value="email">Email</option>
-                        <option value="sold">Sold</option>
-                        <option value="owner">Owner</option>
-                        <option value="country">Country</option>
-                    </select>
-                </div>
-                <div id="table">
-                    <TableHeader />
-                    {this.filterClients().map(c => <ClientRow popModal={this.popModal} client={c} key={c._id} />)}
-                    {this.showCurrentClientNum()}
-                </div>
-                {this.state.showModal ? <Modal
-                    name={this.state.modalClient.name}
-                    surname={this.state.modalClient.surname}
-                    country={this.state.modalClient.country}
-                    id={this.state.modalClient.id}
-                    closeModal={this.closeModal}
-                    updateClient={this.updateClient} /> : null}
+            <div id="table">
+                <TableHeader />
+                {
+                    clientStatus === CLIENT_STATUSES.succeeded
+                        ? <>
+                            {filterClients().map(c => <ClientRow client={c} key={c._id} />)}
+                            <PaginationBar changePage={changePage} pageNum={pageNum} totalClients={clients.length}/>
+                        </>
+                        : <Loader />
+                }
             </div>
-        )
-    }
+            {clientId && <Modal clientId={clientId} />}
+        </div>
+    )
 }
 
 export default Clients

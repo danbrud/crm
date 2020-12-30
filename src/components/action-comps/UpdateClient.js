@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import ClientInput from './ClientInput';
-import axios from 'axios';
-import '../styles/Actions.css'
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import '../../styles/Actions.css'
 import Button from '@material-ui/core/Button';
-import { API_ENDPOINT } from '../../config';
+import { useSelector } from 'react-redux'
+import { selectAvailableOwners, updateClient } from '../../state/slices/clientsSlice';
+import { useDispatch } from 'react-redux'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { SNACKBAR_MESSAGES } from '../../CONSTS';
+import Dropdown from './Dropdown';
 
 
 // const styles = theme => ({
@@ -24,186 +24,81 @@ import { API_ENDPOINT } from '../../config';
 //     },
 // });
 
-class UpdateClient extends Component {
+const UpdateClient = ({ showSnackbar }) => {
+    const availableOwners = useSelector(selectAvailableOwners)
+    const dispatch = useDispatch()
 
-    constructor() {
-        super()
-        this.state = {
-            clients: [],
-            clientIdToUpdate: "",
-            newOwner: "",
-            newEmailType: "",
-            disableEmptySelect: { newOwner: false, newEmailType: false }
+    const [clientIdToUpdate, setClientIdToUpdate] = useState('')
+    const [selects, setSelects] = useState({ owner: '', emailType: '' })
+    const [disableEmptySelect, setDisableEmptySelect] = useState({ owner: false, emailType: false })
+
+    const updateClientID = clientIdToUpdate => setClientIdToUpdate(clientIdToUpdate)
+
+    const handleSelections = e => {
+        setSelects({ ...selects, [e.target.name]: e.target.value })
+        if (!disableEmptySelect[e.target.name]) {
+            setDisableEmptySelect({ ...disableEmptySelect, [e.target.name]: true })
         }
     }
 
-    updateClientID = clientIdToUpdate => this.setState({ clientIdToUpdate })
+    const isClientSelected = () => !!clientIdToUpdate
 
-    getClients = async () => {
-        const clients = await axios.get(`${API_ENDPOINT}/api/clients/actions`)
-        return clients.data
-    }
+    const isDropDownSelected = property => property === 'sold' || disableEmptySelect[property]
 
-    componentDidMount = async () => {
-        const clients = await this.getClients()
-        this.setState({ clients })
-    }
+    const updateClientClick = property => async () => {
+        if (isClientSelected() && isDropDownSelected(property)) {
+            const payload = { property, value: property === 'sold' || selects[property] }
 
-    createEmailDropdownElement = () => {
-        return (
-            <select name="newEmailType" value={this.state.newEmailType} onChange={this.handleSelections}>
-                <option selected disabled={this.state.disableEmptySelect.newEmailType ? true : null}> -- select an email -- </option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-            </select>
-        )
-    }
+            const resultAction = await dispatch(updateClient({ payload, clientId: clientIdToUpdate }))
+            unwrapResult(resultAction)
 
-    createMaterialEmailDropdownElement = () => {
-        return (
-            <Select
-                value={this.state.newEmailType} onChange={this.handleSelections}
-                inputProps={{
-                    name: 'newEmailType',
-                }}
-            >
-                <MenuItem disabled={this.state.disableEmptySelect.newOwner ? true : null}>
-                    <em>-- select an owner --</em>
-                </MenuItem>
-                <MenuItem value="A">A</MenuItem>
-                <MenuItem value="B">B</MenuItem>
-                <MenuItem value="C">C</MenuItem>
-                <MenuItem value="D">D</MenuItem>
-            </Select>
-        )
-    }
-
-    createOwnerDropdownElement = () => {
-        let availableOwners = []
-        this.state.clients.forEach(c => availableOwners.some(ao => ao === c.owner) ?
-            null : availableOwners.push(c.owner))
-
-        return availableOwners.map(ao => <option value={ao}>{ao}</option>)
-    }
-
-    createOwnerMaterialDropdownElement = () => {
-        let availableOwners = []
-        this.state.clients.forEach(c => availableOwners.some(ao => ao === c.owner) ?
-            null : availableOwners.push(c.owner))
-
-        return availableOwners.map(ao => <MenuItem key={ao} value={ao}>{ao}</MenuItem>)
-    }
-
-    updateUser = async (propertyToUpdate, updateValue) => {
-        await axios.put(`${API_ENDPOINT}/api/client/${this.state.clientIdToUpdate}/?propToUpdate=${propertyToUpdate}`, { value: updateValue })
-    }
-
-    handleSelections = e => {
-        if (this.state.disableEmptySelect[e.target.name]) {
-            this.setState({ [e.target.name]: e.target.value })
+            showSnackbar(SNACKBAR_MESSAGES.updated)
         } else {
-            let disableEmptySelect = { ...this.state.disableEmptySelect }
-            disableEmptySelect[e.target.name] = true
-
-            this.setState({ [e.target.name]: e.target.value, disableEmptySelect })
+            showSnackbar(SNACKBAR_MESSAGES.notUpdated)
         }
     }
 
-    checkState = () => this.state.clientIdToUpdate ? true : false
 
-    transferOwnership = () => {
-        if (this.checkState()) {
-            this.updateUser('owner', this.state.newOwner)
-            this.props.showSnackbar("Updated")
-        } else {
-            this.props.showSnackbar("Not updated")
-        }
-    }
-
-    sendEmail = () => {
-        if (this.checkState()) {
-            this.updateUser('emailType', this.state.newEmailType)
-            this.props.showSnackbar("Updated")
-        } else {
-            this.props.showSnackbar("Not updated")
-        }
-    }
-
-    declareSale = () => {
-        if (this.checkState()) {
-            this.updateUser('sold', true)
-            this.props.showSnackbar("Updated")
-        } else {
-            this.props.showSnackbar("Not updated")
-        }
-    }
-
-    render() {
-
-        return (
-            <div id="update-action">
-                <h4>UPDATE</h4>
-
-
-                <ClientInput updateClientID={this.updateClientID} clients={this.state.clients} />
-
-                <div className="update-client" id="transfer-ownership">
-                    <FormControl >
-                        <InputLabel>Transfer Ownership To</InputLabel>
-
-                        <Select
-                            value={this.state.newOwner} onChange={this.handleSelections}
-                            inputProps={{
-                                name: 'newOwner',
-                                id: 'age-simple',
-                            }}
-                        >
-                            <MenuItem disabled={this.state.disableEmptySelect.newOwner ? true : null}>
-                                <em>-- select an owner --</em>
-                            </MenuItem>
-                            {this.createOwnerMaterialDropdownElement()}
-                        </Select>
-                    </FormControl>
-                    <Button id="transfer-btn" onClick={this.transferOwnership} className="action-btn">TRANSFER</Button>
-
-
-
-
-                    {/* <p>Transfer ownership to:</p>
-                    <select name="newOwner" value={this.state.newOwner} onChange={this.handleSelections}>
-                        <option selected disabled={this.state.disableEmptySelect.newOwner ? true : null}> -- select an owner -- </option>
-                        {this.createOwnerDropdownElement()}
-                    </select>
-                    <div id="transfer-btn" onClick={this.transferOwnership}>TRANSFER</div> */}
-                </div>
-
-                <div className="update-client" id="send-email">
-
-                    <FormControl >
-                        <InputLabel>Send Email</InputLabel>
-                        {this.createMaterialEmailDropdownElement()}
-                    </FormControl>
-                    <Button id="send-email-btn" onClick={this.sendEmail} className="action-btn">SEND</Button>
-
-                    {/* <p>Send email:</p>
-                    {this.createEmailDropdownElement()}
-                    <div id="send-email-btn" onClick={this.sendEmail}>SEND</div> */}
-                </div>
-
-                <div className="update-client" id="declare-sale">
-
-                    <div id="declare-sale">Declare Sale!</div>
-                    <Button id="declare-sale-btn" onClick={this.declareSale} className="action-btn">DECLARE</Button>
-
-                    {/* <p>Declare sale!</p>
-                    <div></div>
-                    <div id="declare-sale-btn" onClick={this.declareSale}>DECLARE</div> */}
-                </div >
+    return (
+        <div id="update-action">
+            <h4>UPDATE</h4>
+            <ClientInput updateClientID={updateClientID} />
+            <div className="update-client" id="transfer-ownership">
+                <Dropdown
+                    label='Transfer Ownership To'
+                    value={selects.owner}
+                    handleSelections={handleSelections}
+                    name='owner'
+                    disabled={disableEmptySelect.owner}
+                    dropdownItems={availableOwners}
+                    disabledText='select an owner'
+                />
+                <Button id="transfer-btn" onClick={updateClientClick('owner')} className="action-btn">
+                    TRANSFER
+                </Button>
+            </div>
+            <div className="update-client" id="send-email">
+                <Dropdown
+                    label='Send Email'
+                    value={selects.emailType}
+                    handleSelections={handleSelections}
+                    name='emailType'
+                    disabled={disableEmptySelect.emailType}
+                    dropdownItems={['A', 'B', 'C', 'D']}
+                    disabledText='select an email'
+                />
+                <Button id="send-email-btn" onClick={updateClientClick('emailType')} className="action-btn">
+                    SEND
+                </Button>
+            </div>
+            <div className="update-client" id="declare-sale">
+                <p id="declare-sale">Declare Sale!</p>
+                <Button id="declare-sale-btn" onClick={updateClientClick('sold')} className="action-btn">
+                    DECLARE
+                </Button>
             </div >
-        )
-    }
+        </div >
+    )
 }
 
 export default UpdateClient

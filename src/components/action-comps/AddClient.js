@@ -1,111 +1,71 @@
-import React, { Component } from 'react'
-import axios from 'axios';
+import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { API_ENDPOINT } from '../../config';
+import { useDispatch } from 'react-redux'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { addNewClient } from '../../state/slices/clientsSlice'
+import { toProperCase } from '../../utils';
+import { SNACKBAR_MESSAGES } from '../../CONSTS';
 
-class AddClient extends Component {
+const AddClient = ({ showSnackbar }) => {
+    const dispatch = useDispatch()
 
-    constructor() {
-        super()
-        this.state = {
-            firstName: "",
-            surname: "",
-            email: "",
-            country: "",
-            owner: ""
-        }
-    }
+    const [inputs, setInputs] = useState({ firstName: '', surname: '', email: '', country: '', owner: '' })
 
-    handleInput = e => this.setState({ [e.target.name]: e.target.value })
+    const handleInput = e => setInputs({ ...inputs, [e.target.name]: e.target.value })
 
-    isStateSet = () => {
-        let isStateSet = true
-        const stateKeys = Object.keys(this.state)
-        stateKeys.forEach(sk => this.state[sk] ? null : isStateSet = false)
+    const clearInputs = () => setInputs({ firstName: '', surname: '', email: '', country: '', owner: '' })
 
-        return isStateSet
-    }
+    const isInputsValid = () => Object.keys(inputs).every(key => !!inputs[key])
 
-    saveClient = async (client) => {
-        await axios.post(`${API_ENDPOINT}/client`, client)
-    }
+    const addClient = async () => {
+        if (isInputsValid()) {
+            const resultAction = await dispatch(addNewClient(inputs))
+            unwrapResult(resultAction)
 
-    clearInputs = () => this.setState({
-        firstName: "",
-        surname: "",
-        email: "",
-        country: "",
-        owner: ""
-    })
-
-    addClient = () => {
-        if (this.isStateSet()) {
-            const client = {
-                name: `${this.state.firstName} ${this.state.surname}`,
-                email: this.state.email,
-                firstContact: new Date(),
-                owner: this.state.owner,
-                country: this.state.country
-            }
-            this.saveClient(client)
-            this.clearInputs()
-            this.props.showSnackbar("Added")
+            clearInputs()
+            showSnackbar(SNACKBAR_MESSAGES.added)
         } else {
-            this.props.showSnackbar("Not added")
+            showSnackbar(SNACKBAR_MESSAGES.notAdded)
         }
     }
 
-    render() {
-        return (
-            <div id="create-action">
-                <h4>ADD CLIENT</h4>
+    const splitFieldWithUpperCaseAndProperCase = field => {
+        let upperCaseOccurences = field.match(/[A-Z]/g)
+        if (upperCaseOccurences) {
+            upperCaseOccurences = upperCaseOccurences.map(letter => field.indexOf(letter))
+            upperCaseOccurences.forEach(index => {
+                field = field.split('')
+                field.splice(index, 0, ' ')
+                field = field.join('')
+            })
+        }
 
-                <div id="input-fields">
-
-
-                    <TextField
-                        className="standard-name"
-                        label="First Name"
-                        name="firstName"
-                        value={this.state.firstName} onChange={this.handleInput}
-                        margin="none"
-                    />
-
-                    <TextField
-                        className="standard-name"
-                        label="Surname"
-                        name="surname" value={this.state.surname} onChange={this.handleInput}
-                        margin="none"
-                    />
-
-                    <TextField
-                        className="standard-name"
-                        label="Email"
-                        name="email" value={this.state.email} onChange={this.handleInput}
-                        margin="none"
-                    />
-
-                    <TextField
-                        className="standard-name"
-                        label="Country"
-                        name="country" value={this.state.country} onChange={this.handleInput}
-                        margin="none"
-                    />
-
-                    <TextField
-                        className="standard-name"
-                        label="Owner"
-                        name="owner" value={this.state.owner} onChange={this.handleInput}
-                        margin="none"
-                    />
-
-                    <Button id="add-client-btn" onClick={this.addClient} variant="contained" color="primary">Add New Client</Button>
-
-                </div>
-            </div>
-        )
+        return field.split(' ').map(word => toProperCase(word)).join(' ')
     }
+
+    const inputFields = ['firstName', 'surname', 'email', 'country', 'owner']
+    return (
+        <div id="create-action">
+            <h4>ADD CLIENT</h4>
+            <div id="input-fields">
+                {inputFields.map((field, i) => (
+                    <TextField
+                        key={i}
+                        className="standard-name"
+                        label={splitFieldWithUpperCaseAndProperCase(field)}
+                        name={field}
+                        value={inputs[field]}
+                        onChange={handleInput}
+                        margin="none"
+                    />
+                ))}
+                <Button id="add-client-btn" onClick={addClient} variant="contained" color="primary">
+                    Add New Client
+                </Button>
+            </div>
+        </div>
+    )
 }
 
 export default AddClient

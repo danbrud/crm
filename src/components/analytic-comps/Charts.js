@@ -1,26 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
 import TopEmployees from './TopEmployees';
 import SalesBy from './SalesBy';
 import SalesSince from './SalesSince';
 import ClientAcquisition from './ClientAcquisition';
-import '../styles/Charts.css'
+import '../../styles/Charts.css'
 
-class Charts extends Component {
+const Charts = () => {
 
-    render() {
-        return (
-            <div id="charts-container">
-                <div id="first-two">
-                    <TopEmployees clients={this.props.clients} />
-                    <SalesBy clients={this.props.clients} />
-                </div>
-                <div id="second-two">
-                    <SalesSince clients={this.props.clients} />
-                    <ClientAcquisition clients={this.props.clients} />
-                </div>
+    return (
+        <div id="charts-container">
+            <div id="top">
+                <TopEmployees />
+                <SalesBy />
             </div>
-        )
-    }
+            <div id="bottom">
+                <SalesSince />
+                <ClientAcquisition />
+            </div>
+        </div>
+    )
 }
 
 export default Charts

@@ -1,16 +1,11 @@
-import React, { Component } from 'react'
-import {Redirect} from 'react-router-dom'
+import React from 'react'
+import { Redirect } from 'react-router-dom'
 
-class Home extends Component {
+const Home = () => {
 
-    render() {
-
-        this.props.redirectPage()
-
-        return(
-            <Redirect to="/clients" />
-        )
-    }
+    return (
+        <Redirect to="/clients" />
+    )
 }
 
 export default Home

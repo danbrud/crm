@@ -1,58 +1,45 @@
-import React, { Component } from 'react'
-import axios from 'axios';
-import { API_ENDPOINT } from '../../config';
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectClientById, updateClient} from '../../state/slices/clientsSlice';
+import { unwrapResult } from '@reduxjs/toolkit'
+import { Redirect, useHistory } from 'react-router-dom';
 
-class Modal extends Component {
+const Modal = ({ clientId }) => {
+    const history = useHistory()
+    const dispatch = useDispatch()
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            nameInput: this.props.name,
-            surnameInput: props.surname,
-            countryInput: props.country
-        }
-    }
+    const client = useSelector(state => selectClientById(state, clientId))
 
-    handleInput = e => this.setState({ [e.target.name]: e.target.value })
+    const [inputs, setInputs] = useState({ firstName: client?.firstName, surname: client?.surname, country: client?.country })
 
-    userChangedInput = () => {
-        if (this.state.nameInput === this.props.name &&
-            this.state.surnameInput === this.props.surname &&
-            this.state.countryInput === this.props.country) {
+    const handleInput = e => setInputs({ ...inputs, [e.target.name]: e.target.value })
 
-            return false
-        }
-        return true
-    }
+    const userChangedInput = () => !Object.keys(inputs).every(key => inputs[key] === client[key])
 
-    updateClient = async () => {
-        if (!this.userChangedInput()) {
+    const updateClientClick = async () => {
+        if (!userChangedInput()) {
             alert("Please change a field or click the 'x' to exit.")
             return
         }
 
-        const client = {
-            name: `${this.state.nameInput} ${this.state.surnameInput}`,
-            country: this.state.countryInput
-        }
-
-        await axios.put(`${API_ENDPOINT}/api/client/modal/${this.props.id}`, client)
-        this.props.updateClient()
+        const resultAction = await dispatch(updateClient({ payload: inputs, clientId, isModal: true }))
+        unwrapResult(resultAction)
+        closeModal()
     }
 
-    closeModal = () => this.props.closeModal()
+    const closeModal = () => history.push('/clients')
 
-    render() {
-        return (
-            <div id="modal">
-                <div><i id="exit-modal-btn" onClick={this.closeModal} className="far fa-times-circle"></i></div>
-                <div><span>Name:</span><input type="text" name="nameInput" value={this.state.nameInput} onChange={this.handleInput} /></div>
-                <div><span>Surname:</span><input type="text" name="surnameInput" value={this.state.surnameInput} onChange={this.handleInput} /></div>
-                <div><span>Country:</span><input type="text" name="countryInput" value={this.state.countryInput} onChange={this.handleInput} /></div>
-                <div onClick={this.updateClient} id="clients-update-btn">Update</div>
+    return (
+        client
+            ? <div id="modal">
+                <div><i id="exit-modal-btn" onClick={closeModal} className="far fa-times-circle"></i></div>
+                <div><span>Name:</span><input type="text" name="firstName" value={inputs.firstName} onChange={handleInput} /></div>
+                <div><span>Surname:</span><input type="text" name="surname" value={inputs.surname} onChange={handleInput} /></div>
+                <div><span>Country:</span><input type="text" name="country" value={inputs.country} onChange={handleInput} /></div>
+                <div onClick={updateClientClick} id="clients-update-btn">Update</div>
             </div>
-        )
-    }
+            : <Redirect to='/clients' />
+    )
 }
 
 export default Modal

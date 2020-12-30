@@ -1,1 +1,0 @@
-export const API_ENDPOINT = process.env ? `http://localhost:${process.env.REACT_APP_API_PORT}` : ''

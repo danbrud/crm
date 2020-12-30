@@ -5,11 +5,13 @@ const cors = require('cors')
 const api = require('./server/routes/api')
 
 const mongoose = require('mongoose')
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 
 const app = express()
 
-if (process.env.NODE_ENV === 'development') {
+const inDevMode = process.env.NODE_ENV === 'development'
+
+if (inDevMode) {
     app.use(cors())
 } else {
     app.use(express.static(path.join(__dirname, 'build')))
@@ -19,9 +21,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use('/api', api)
 
-app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
+if (inDevMode) {
+    app.get('*', function (req, res) {
+        res.sendFile(path.join(__dirname, 'build', 'index.html'))
+    })
+}
 
 const PORT = process.env.PORT
 app.listen(PORT, function () {

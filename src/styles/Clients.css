@@ -29,6 +29,7 @@
 #paging {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    user-select: none;
 }
 
 #paging > i {
@@ -88,7 +89,7 @@
 }
 
 /* #modal > div > i {
-    
+
 } */
 
 #modal > div > span {
