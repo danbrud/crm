@@ -20,7 +20,7 @@ router.post('/clients', async (req, res) => {
 
 router.put('/clients/:clientId', async (req, res) => {
     const { clientId } = req.params
-    const { property, value } = req.body // should change to body
+    const { property, value } = req.body
 
     const client = await Client.findOneAndUpdate({ _id: clientId }, { $set: { [property]: value } }, { new: true })
     res.json(client)
@@ -29,10 +29,6 @@ router.put('/clients/:clientId', async (req, res) => {
 router.put('/clients/modal/:clientId', async (req, res) => {
     const { clientId } = req.params
     const { firstName, surname, country } = req.body
-
-    // if(`${reqClient.name} ${reqClient.surname}` === currentClient.name) { delete reqClient.name }
-    // if(reqClient.country === currentClient.country) { delete reqClient.country }
-    // Should update only specific keys
 
     const client = await Client.findOneAndUpdate({ _id: clientId }, { $set: { firstName, surname, country } }, { new: true })
     res.json(client)
