@@ -53,6 +53,7 @@ const AddClient = ({ showSnackbar }) => {
                     <TextField
                         key={i}
                         className="standard-name"
+                        color='primary'
                         label={splitFieldWithUpperCaseAndProperCase(field)}
                         name={field}
                         value={inputs[field]}

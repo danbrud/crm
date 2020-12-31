@@ -9,33 +9,29 @@ router.get('/sanity', (req, res) => {
 
 router.get('/clients', async (req, res) => {
     const clients = await Client.find({})
-    res.send(clients)
+    res.json(clients)
 })
 
 router.post('/clients', async (req, res) => {
     const client = new Client(req.body)
     await client.save()
-    res.send(client)
+    res.json(client)
 })
 
 router.put('/clients/:clientId', async (req, res) => {
     const { clientId } = req.params
-    const { property, value } = req.body // should change to body
+    const { property, value } = req.body
 
     const client = await Client.findOneAndUpdate({ _id: clientId }, { $set: { [property]: value } }, { new: true })
-    res.send(client)
+    res.json(client)
 })
 
 router.put('/clients/modal/:clientId', async (req, res) => {
     const { clientId } = req.params
     const { firstName, surname, country } = req.body
 
-    // if(`${reqClient.name} ${reqClient.surname}` === currentClient.name) { delete reqClient.name }
-    // if(reqClient.country === currentClient.country) { delete reqClient.country }
-    // Should update only specific keys
-
     const client = await Client.findOneAndUpdate({ _id: clientId }, { $set: { firstName, surname, country } }, { new: true })
-    res.send(client)
+    res.json(client)
 })
 
 router.post('/admin/populate-data', async (req, res) => {
@@ -50,7 +46,7 @@ router.post('/admin/populate-data', async (req, res) => {
     })
 
     const clients = await Promise.all(promises)
-    res.send({ status: 'success', data: clients })
+    res.json({ status: 'success', data: clients })
 })
 
 module.exports = router
