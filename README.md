@@ -2,24 +2,18 @@
 
 CRM is a Client Ralationship Management system built with React. It includes a graphic analytics dashboard for company reports.
 
-Demo: [https://dannys-crm.herokuapp.com](https://dannys-crm.herokuapp.com)
-
 ## Table Of Contents
 - [CRM](#CRM)
-  * [Running the project](#running-the-project)
+  * [Demo](#demo)
   * [Screenshots](#screenshots)
     + [Client List](#client-list)
     + [Add or Update Client](#add-or-update-client)
     + [Analytics Dashboard](#analytics-dashboard)
   * [Tech Stack](#tech-stack)
 
-## Running the project
-1. Clone the repo.
-2. Run `npm install`.
-3. Run `npm run build`
-4. Run `mongod`
-5. Run `npm start`.
-6. Navigate to `http://localhost:3000`.
+## Demo
+
+[https://dannys-crm.herokuapp.com](https://dannys-crm.herokuapp.com)
 
 ## Screenshots
 

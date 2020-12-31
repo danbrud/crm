@@ -14,7 +14,7 @@ const inDevMode = process.env.NODE_ENV === 'development'
 if (inDevMode) {
     app.use(cors())
 } else {
-    app.use(express.static(path.join(__dirname, 'build')))
+    app.use(express.static(path.join(__dirname, '..', 'build')))
 }
 
 app.use(express.json())
