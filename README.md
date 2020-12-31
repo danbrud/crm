@@ -33,5 +33,5 @@ View a report of all the metrics regarding your clients.
 <p align="center"><img src="assets/analytics-dashboard.png" width="300" /></p>
 
 ## Techstack
-1. React, Recharts, Material-UI and Axios.
+1. React, Redux, Recharts, Material-UI, React Router Dom and Axios.
 2. Express (Node.js), Mongoose (MongoDB).
