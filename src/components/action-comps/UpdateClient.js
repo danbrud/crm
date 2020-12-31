@@ -16,20 +16,14 @@ const UpdateClient = ({ showSnackbar }) => {
 
     const [clientIdToUpdate, setClientIdToUpdate] = useState('')
     const [selects, setSelects] = useState({ owner: '', emailType: '' })
-    const [disableEmptySelect, setDisableEmptySelect] = useState({ owner: false, emailType: false })
 
     const updateClientID = clientIdToUpdate => setClientIdToUpdate(clientIdToUpdate)
 
-    const handleSelections = e => {
-        setSelects({ ...selects, [e.target.name]: e.target.value })
-        if (!disableEmptySelect[e.target.name]) {
-            setDisableEmptySelect({ ...disableEmptySelect, [e.target.name]: true })
-        }
-    }
+    const handleSelections = e => setSelects({ ...selects, [e.target.name]: e.target.value })
 
     const isClientSelected = () => !!clientIdToUpdate
 
-    const isDropDownSelected = property => property === 'sold' || disableEmptySelect[property]
+    const isDropDownSelected = property => property === 'sold' || !!selects[property]
 
     const updateClientClick = property => async () => {
         if (isClientSelected() && isDropDownSelected(property)) {
@@ -55,7 +49,7 @@ const UpdateClient = ({ showSnackbar }) => {
                     value={selects.owner}
                     handleSelections={handleSelections}
                     name='owner'
-                    disabled={disableEmptySelect.owner}
+                    disabled={!!selects.owner}
                     dropdownItems={availableOwners}
                     disabledText='select an owner'
                 />
@@ -69,7 +63,7 @@ const UpdateClient = ({ showSnackbar }) => {
                     value={selects.emailType}
                     handleSelections={handleSelections}
                     name='emailType'
-                    disabled={disableEmptySelect.emailType}
+                    disabled={!!selects.emailType}
                     dropdownItems={['A', 'B', 'C', 'D']}
                     disabledText='select an email'
                 />
