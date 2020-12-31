@@ -4,6 +4,7 @@ import { fetchClients, selectClientStatus } from './state/slices/clientsSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import NavBar from './components/NavBar';
 import Routes from './components/Routes';
+import { CLIENT_STATUSES } from './CONSTS';
 
 
 
@@ -12,11 +13,10 @@ const App = () => {
   const clientStatus = useSelector(selectClientStatus)
 
   useEffect(() => {
-    if (clientStatus === 'idle') {
-      //add CLIENT_STATUSES in condition
+    if (clientStatus === CLIENT_STATUSES.idle) {
       dispatch(fetchClients())
     }
-  }, [clientStatus, dispatch]) //Come back and learn why I need to add this
+  }, [clientStatus, dispatch])
 
   return (
     <>
