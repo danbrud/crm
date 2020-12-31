@@ -21,7 +21,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use('/api', api)
 
-if (inDevMode) {
+if (!inDevMode) {
     app.get('*', function (req, res) {
         res.sendFile(path.join(__dirname, 'build', 'index.html'))
     })
