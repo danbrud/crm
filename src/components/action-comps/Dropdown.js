@@ -4,7 +4,7 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
 const Dropdown = ({ label, value, handleSelections, name, disabled, dropdownItems, disabledText }) => {
 
   return (
-    <FormControl >
+    <FormControl>
       <InputLabel>{label}</InputLabel>
       <Select value={value} onChange={handleSelections} inputProps={{ name }}>
         <MenuItem disabled={disabled}>

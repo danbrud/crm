@@ -45,6 +45,7 @@
 #input-fields {
     display: grid;
     grid-template-rows: repeat(5, 1fr);
+    width: 200px;
     margin: 10px;
 }
 
@@ -84,7 +85,7 @@
 #saved-ok-btn:hover {
     background-color: rgb(141, 138, 138);
 }
-/* 
+/*
 #actions > .MuiSnackbar-root-107 {
     background-color: white;
     width: 200px;

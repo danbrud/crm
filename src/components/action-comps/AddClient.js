@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { unwrapResult } from '@reduxjs/toolkit'
-import { addNewClient } from '../../state/slices/clientsSlice'
+import { addNewClient, selectAvailableOwners } from '../../state/slices/clientsSlice'
 import { toProperCase } from '../../utils';
 import { SNACKBAR_MESSAGES } from '../../CONSTS';
+import Dropdown from './Dropdown'
 
 const AddClient = ({ showSnackbar }) => {
+    const availableOwners = useSelector(selectAvailableOwners)
     const dispatch = useDispatch()
 
     const [inputs, setInputs] = useState({ firstName: '', surname: '', email: '', country: '', owner: '' })
@@ -44,7 +46,7 @@ const AddClient = ({ showSnackbar }) => {
         return field.split(' ').map(word => toProperCase(word)).join(' ')
     }
 
-    const inputFields = ['firstName', 'surname', 'email', 'country', 'owner']
+    const inputFields = ['firstName', 'surname', 'email', 'country']
     return (
         <div id="create-action">
             <h4>ADD CLIENT</h4>
@@ -61,6 +63,15 @@ const AddClient = ({ showSnackbar }) => {
                         margin="none"
                     />
                 ))}
+                <Dropdown
+                    label='Owner'
+                    value={inputs.owner}
+                    handleSelections={handleInput}
+                    name='owner'
+                    disabled={!!inputs.owner}
+                    dropdownItems={availableOwners}
+                    disabledText='select an owner'
+                />
                 <Button id="add-client-btn" onClick={addClient} variant="contained" color="primary">
                     Add New Client
                 </Button>
