@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { CLIENT_STATUSES } from '../../CONSTS'
 import { selectAllClients, selectClientStatus } from '../../state/slices/clientsSlice'
@@ -6,11 +6,9 @@ import Loader from '../Loader'
 import ClientRow from './ClientRow'
 import PaginationBar from './PaginationBar'
 
-const TableData = ({ filters }) => {
+const TableData = ({ filters, pageNum, setPageNum }) => {
   const clients = useSelector(selectAllClients)
   const clientStatus = useSelector(selectClientStatus)
-
-  const [pageNum, setPageNum] = useState(1)
 
   let clientsToDisplay = clients
   const searchTerm = filters.searchFilter.toLowerCase()

@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
-import TableHeader from './TableHeader';
-import ClientRow from './ClientRow';
 import '../../styles/Clients.css'
 import Modal from './Modal';
-import { useSelector } from 'react-redux'
-import { selectAllClients } from '../../state/slices/clientsSlice'
 import { useParams } from 'react-router-dom';
 import ClientsFilter from './ClientsFiltter';
 import ClientsTable from './ClientsTable';
